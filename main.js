@@ -4,8 +4,6 @@
  * MIT Licensed
  */
 
-var filesystemLibrary = require('../OLSKFilesystem/main');
-
 //_ OLSKInternationalDefaultIdentifier
 
 exports.OLSKInternationalDefaultIdentifier = function() {
@@ -19,7 +17,7 @@ exports.OLSKInternationalInputDataIsTranslationFilename = function(inputData) {
 		return false;
 	}
 
-	if (inputData.split('.').pop() !== filesystemLibrary.OLSKFilesystemSharedFileExtensionYAML()) {
+	if (inputData.split('.').pop() !== 'yaml') {
 		return false;
 	}
 
