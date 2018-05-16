@@ -4,7 +4,7 @@
  * MIT Licensed
  */
 
-var filesystemLibrary = require('../ROCOFilesystem/main');
+var filesystemLibrary = require('../OLSKFilesystem/main');
 
 //_ OLSKInternationalDefaultIdentifier
 
@@ -19,7 +19,7 @@ exports.OLSKInternationalInputDataIsTranslationFilename = function(inputData) {
 		return false;
 	}
 
-	if (inputData.split('.').pop() !== filesystemLibrary.ROCOFilesystemSharedFileExtensionYAML()) {
+	if (inputData.split('.').pop() !== filesystemLibrary.OLSKFilesystemSharedFileExtensionYAML()) {
 		return false;
 	}
 
