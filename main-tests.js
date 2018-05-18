@@ -16,40 +16,40 @@ describe('OLSKInternationalDefaultIdentifier', function testOLSKInternationalDef
 
 });
 
-describe('OLSKInternationalInputDataIsTranslationFilename', function testOLSKInternationalInputDataIsTranslationFilename() {
+describe('OLSKInternationalInputDataIsTranslationFileBasename', function testOLSKInternationalInputDataIsTranslationFileBasename() {
 
 	it('returns false if not string', function() {
-		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFilename(null), false);
+		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFileBasename(null), false);
 	});
 
 	it('returns false if without yaml extension', function() {
-		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFilename('i18n.en.yml'), false);
+		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFileBasename('i18n.en.yml'), false);
 	});
 
 	it('returns false if without OLSKInternationalDefaultIdentifier', function() {
-		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFilename('en.yaml'), false);
+		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFileBasename('en.yaml'), false);
 	});
 
 	it('returns false if without languageID', function() {
-		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFilename('i18n.yaml'), false);
+		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFileBasename('i18n.yaml'), false);
 	});
 
-	it('returns true if valid translationFilename', function() {
-		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFilename('i18n.en.yaml'), true);
+	it('returns true if valid translationFileBasename', function() {
+		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFileBasename('i18n.en.yaml'), true);
 	});
 
 });
 
-describe('OLSKInternationalLanguageIDForTranslationFilename', function testOLSKInternationalLanguageIDForTranslationFilename() {
+describe('OLSKInternationalLanguageIDForTranslationFileBasename', function testOLSKInternationalLanguageIDForTranslationFileBasename() {
 
-	it('throws error if not translationFilename', function() {
+	it('throws error if not translationFileBasename', function() {
 		assert.throws(function() {
-			internationalLibrary.OLSKInternationalLanguageIDForTranslationFilename(null);
+			internationalLibrary.OLSKInternationalLanguageIDForTranslationFileBasename(null);
 		}, /OLSKErrorInputInvalid/);
 	});
 
 	it('returns languageID', function() {
-		assert.strictEqual(internationalLibrary.OLSKInternationalLanguageIDForTranslationFilename('i18n.en.yaml'), 'en');
+		assert.strictEqual(internationalLibrary.OLSKInternationalLanguageIDForTranslationFileBasename('i18n.en.yaml'), 'en');
 	});
 
 });

@@ -10,9 +10,9 @@ exports.OLSKInternationalDefaultIdentifier = function() {
 	return 'i18n';
 };
 
-//_ OLSKInternationalInputDataIsTranslationFilename
+//_ OLSKInternationalInputDataIsTranslationFileBasename
 
-exports.OLSKInternationalInputDataIsTranslationFilename = function(inputData) {
+exports.OLSKInternationalInputDataIsTranslationFileBasename = function(inputData) {
 	if (typeof inputData !== 'string') {
 		return false;
 	}
@@ -32,10 +32,10 @@ exports.OLSKInternationalInputDataIsTranslationFilename = function(inputData) {
 	return true;
 };
 
-//_ OLSKInternationalLanguageIDForTranslationFilename
+//_ OLSKInternationalLanguageIDForTranslationFileBasename
 
-exports.OLSKInternationalLanguageIDForTranslationFilename = function(inputData) {
-	if (!exports.OLSKInternationalInputDataIsTranslationFilename(inputData)) {
+exports.OLSKInternationalLanguageIDForTranslationFileBasename = function(inputData) {
+	if (!exports.OLSKInternationalInputDataIsTranslationFileBasename(inputData)) {
 		throw new Error('OLSKErrorInputInvalid');
 	}
 
