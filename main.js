@@ -11,73 +11,73 @@
 }(this, (function(exports) {
 	'use strict';
 
-//_ OLSKInternationalDefaultIdentifier
+	//_ OLSKInternationalDefaultIdentifier
 
-exports.OLSKInternationalDefaultIdentifier = function() {
-	return 'i18n';
-};
+	exports.OLSKInternationalDefaultIdentifier = function() {
+		return 'i18n';
+	};
 
-//_ OLSKInternationalInputDataIsTranslationFileBasename
+	//_ OLSKInternationalInputDataIsTranslationFileBasename
 
-exports.OLSKInternationalInputDataIsTranslationFileBasename = function(inputData) {
-	if (typeof inputData !== 'string') {
-		return false;
-	}
+	exports.OLSKInternationalInputDataIsTranslationFileBasename = function(inputData) {
+		if (typeof inputData !== 'string') {
+			return false;
+		}
 
-	if (inputData.split('.').pop() !== 'yaml') {
-		return false;
-	}
+		if (inputData.split('.').pop() !== 'yaml') {
+			return false;
+		}
 
-	if (inputData.split('.').shift() !== exports.OLSKInternationalDefaultIdentifier()) {
-		return false;
-	}
+		if (inputData.split('.').shift() !== exports.OLSKInternationalDefaultIdentifier()) {
+			return false;
+		}
 
-	if (!exports._OLSKInternationalLanguageIDForInputData(inputData)) {
-		return false;
-	}
+		if (!exports._OLSKInternationalLanguageIDForInputData(inputData)) {
+			return false;
+		}
 
-	return true;
-};
+		return true;
+	};
 
-//_ OLSKInternationalLanguageIDForTranslationFileBasename
+	//_ OLSKInternationalLanguageIDForTranslationFileBasename
 
-exports.OLSKInternationalLanguageIDForTranslationFileBasename = function(inputData) {
-	if (!exports.OLSKInternationalInputDataIsTranslationFileBasename(inputData)) {
-		throw new Error('OLSKErrorInputInvalid');
-	}
+	exports.OLSKInternationalLanguageIDForTranslationFileBasename = function(inputData) {
+		if (!exports.OLSKInternationalInputDataIsTranslationFileBasename(inputData)) {
+			throw new Error('OLSKErrorInputInvalid');
+		}
 
-	return exports._OLSKInternationalLanguageIDForInputData(inputData);
-};
+		return exports._OLSKInternationalLanguageIDForInputData(inputData);
+	};
 
-//_ _OLSKInternationalLanguageIDForInputData
+	//_ _OLSKInternationalLanguageIDForInputData
 
-exports._OLSKInternationalLanguageIDForInputData = function(inputData) {
-	var elements = inputData.split('.');
+	exports._OLSKInternationalLanguageIDForInputData = function(inputData) {
+		var elements = inputData.split('.');
 
-	elements.pop();
-	elements.shift();
+		elements.pop();
+		elements.shift();
 
-	return elements.pop();
-};
+		return elements.pop();
+	};
 
-//_ OLSKInternationalLocalizedStringWithTranslationKeyAndTranslationDictionary
+	//_ OLSKInternationalLocalizedStringWithTranslationKeyAndTranslationDictionary
 
-exports.OLSKInternationalLocalizedStringWithTranslationKeyAndTranslationDictionary = function(translationKey, translationDictionary) {
-	if (typeof translationDictionary !== 'object' || translationDictionary === null) {
-		throw new Error('OLSKErrorInputInvalid');
-	}
+	exports.OLSKInternationalLocalizedStringWithTranslationKeyAndTranslationDictionary = function(translationKey, translationDictionary) {
+		if (typeof translationDictionary !== 'object' || translationDictionary === null) {
+			throw new Error('OLSKErrorInputInvalid');
+		}
 
-	var localizedString = translationDictionary[translationKey];
+		var localizedString = translationDictionary[translationKey];
 
-	if (!localizedString) {
-		localizedString = 'TRANSLATION_MISSING';
-	}
+		if (!localizedString) {
+			localizedString = 'TRANSLATION_MISSING';
+		}
 
-	return localizedString;
-};
+		return localizedString;
+	};
 
-Object.defineProperty(exports, '__esModule', {
-	value: true
-});
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
 
 })));
