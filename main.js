@@ -71,6 +71,10 @@
 
 		if (!localizedString) {
 			localizedString = 'TRANSLATION_MISSING';
+			console.log([
+				localizedString,
+				translationKey,
+				]);
 		}
 
 		return localizedString;
