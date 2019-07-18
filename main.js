@@ -24,7 +24,7 @@
 			return false;
 		}
 
-		if (inputData.split('.').pop() !== 'yaml') {
+		if (!inputData.split('.').pop().match(/ya?ml/i)) {
 			return false;
 		}
 

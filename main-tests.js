@@ -23,7 +23,7 @@ describe('OLSKInternationalInputDataIsTranslationFileBasename', function testOLS
 	});
 
 	it('returns false if without yaml extension', function() {
-		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFileBasename('i18n.en.yml'), false);
+		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFileBasename('i18n.en.abc'), false);
 	});
 
 	it('returns false if without OLSKInternationalDefaultIdentifier', function() {
@@ -36,6 +36,7 @@ describe('OLSKInternationalInputDataIsTranslationFileBasename', function testOLS
 
 	it('returns true if valid translationFileBasename', function() {
 		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFileBasename('i18n.en.yaml'), true);
+		assert.strictEqual(internationalLibrary.OLSKInternationalInputDataIsTranslationFileBasename('i18n.en.yml'), true);
 	});
 
 });
