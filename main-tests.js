@@ -10,7 +10,7 @@ var internationalLibrary = require('./main');
 
 describe('OLSKInternationalDefaultIdentifier', function testOLSKInternationalDefaultIdentifier() {
 
-	it('returns i18n', function() {
+	it('returns string', function() {
 		assert.strictEqual(internationalLibrary.OLSKInternationalDefaultIdentifier(), 'i18n');
 	});
 
@@ -43,7 +43,7 @@ describe('OLSKInternationalInputDataIsTranslationFileBasename', function testOLS
 
 describe('OLSKInternationalLanguageIDForTranslationFileBasename', function testOLSKInternationalLanguageIDForTranslationFileBasename() {
 
-	it('throws error if not translationFileBasename', function() {
+	it('throws error if not valid', function() {
 		assert.throws(function() {
 			internationalLibrary.OLSKInternationalLanguageIDForTranslationFileBasename(null);
 		}, /OLSKErrorInputInvalid/);
