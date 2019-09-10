@@ -32,7 +32,7 @@
 			return false;
 		}
 
-		if (!exports._OLSKInternationalLanguageIDForInputData(inputData)) {
+		if (!exports._OLSKInternationalLanguageID(inputData)) {
 			return false;
 		}
 
@@ -46,12 +46,12 @@
 			throw new Error('OLSKErrorInputInvalid');
 		}
 
-		return exports._OLSKInternationalLanguageIDForInputData(inputData);
+		return exports._OLSKInternationalLanguageID(inputData);
 	};
 
-	//_ _OLSKInternationalLanguageIDForInputData
+	//_ _OLSKInternationalLanguageID
 
-	exports._OLSKInternationalLanguageIDForInputData = function(inputData) {
+	exports._OLSKInternationalLanguageID = function(inputData) {
 		var elements = inputData.split('.');
 
 		elements.pop();
