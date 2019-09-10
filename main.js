@@ -17,9 +17,9 @@
 		return 'i18n';
 	};
 
-	//_ OLSKInternationalInputDataIsTranslationFileBasename
+	//_ OLSKInternationalIsTranslationFileBasename
 
-	exports.OLSKInternationalInputDataIsTranslationFileBasename = function(inputData) {
+	exports.OLSKInternationalIsTranslationFileBasename = function(inputData) {
 		if (typeof inputData !== 'string') {
 			return false;
 		}
@@ -39,10 +39,10 @@
 		return true;
 	};
 
-	//_ OLSKInternationalLanguageIDForTranslationFileBasename
+	//_ OLSKInternationalLanguageID
 
-	exports.OLSKInternationalLanguageIDForTranslationFileBasename = function(inputData) {
-		if (!exports.OLSKInternationalInputDataIsTranslationFileBasename(inputData)) {
+	exports.OLSKInternationalLanguageID = function(inputData) {
+		if (!exports.OLSKInternationalIsTranslationFileBasename(inputData)) {
 			throw new Error('OLSKErrorInputInvalid');
 		}
 
@@ -60,9 +60,9 @@
 		return elements.pop();
 	};
 
-	//_ OLSKInternationalLocalizedStringWithTranslationKeyAndTranslationDictionary
+	//_ OLSKInternationalLocalizedString
 
-	exports.OLSKInternationalLocalizedStringWithTranslationKeyAndTranslationDictionary = function(translationKey, translationDictionary) {
+	exports.OLSKInternationalLocalizedString = function(translationKey, translationDictionary) {
 		if (typeof translationDictionary !== 'object' || translationDictionary === null) {
 			throw new Error('OLSKErrorInputInvalid');
 		}
