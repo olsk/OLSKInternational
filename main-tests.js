@@ -55,6 +55,24 @@ describe('OLSKInternationalLanguageID', function testOLSKInternationalLanguageID
 
 });
 
+describe('OLSKInternationalSimplifiedLanguageCode', function testOLSKInternationalSimplifiedLanguageCode() {
+
+	it('throws error if not string', function() {
+		assert.throws(function() {
+			internationalLibrary.OLSKInternationalSimplifiedLanguageCode(null);
+		}, /OLSKErrorInputInvalid/);
+	});
+
+	it('returns input', function() {
+		assert.strictEqual(internationalLibrary.OLSKInternationalSimplifiedLanguageCode(''), '');
+	});
+
+	it('extracts first hyphenated segment', function() {
+		assert.strictEqual(internationalLibrary.OLSKInternationalSimplifiedLanguageCode('alfa-bravo'), 'alfa');
+	});
+
+});
+
 describe('OLSKInternationalLocalizedString', function testOLSKInternationalLocalizedString() {
 
 	it('throws error if param2 not object', function() {

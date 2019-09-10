@@ -49,6 +49,16 @@
 		return exports._OLSKInternationalLanguageID(inputData);
 	};
 
+	//_ OLSKInternationalSimplifiedLanguageCode
+
+	exports.OLSKInternationalSimplifiedLanguageCode = function(inputData) {
+		if (typeof inputData !== 'string') {
+			throw 'OLSKErrorInputInvalid';
+		}
+
+		return inputData.split('-').shift();
+	};
+
 	//_ _OLSKInternationalLanguageID
 
 	exports._OLSKInternationalLanguageID = function(inputData) {
