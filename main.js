@@ -94,4 +94,46 @@
 		value: true
 	});
 
+	//_ OLSKInternationalLocalizedStringCallback
+
+	exports.OLSKInternationalLocalizedStringCallback = function(dictionary, fallbackLocales) {
+		if (typeof dictionary !== 'object' || dictionary === null) {
+			throw new Error('OLSKErrorInputInvalid');
+		}
+
+		if (!Array.isArray(fallbackLocales)) {
+			throw new Error('OLSKErrorInputInvalid');
+		}
+
+		const _locales = Object.keys(dictionary).reverse().concat(...fallbackLocales.map(function (e) {
+				return [exports.OLSKInternationalSimplifiedLanguageCode(e), e]
+			}).reverse())
+
+		return function (signature, requestLocales) {
+			if (!Array.isArray(requestLocales)) {
+				throw new Error('OLSKErrorInputInvalid');
+			}
+
+			let locales = _locales.concat(...requestLocales.map(function (e) {
+				return [exports.OLSKInternationalSimplifiedLanguageCode(e), e]
+			}).reverse(), [])
+
+			let outputData;
+
+			while (!outputData && locales.length) {
+				outputData = (dictionary[locales.pop()] || {})[signature];
+			}
+
+			if (!outputData) {
+				console.log([outputData = 'TRANSLATION_MISSING', signature].join(' '));
+			}
+
+			return outputData;				
+		};
+	};
+
+	Object.defineProperty(exports, '__esModule', {
+		value: true
+	});
+
 })));

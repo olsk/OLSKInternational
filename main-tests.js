@@ -88,3 +88,92 @@ describe('OLSKInternationalLocalizedString', function testOLSKInternationalLocal
 	});
 
 });
+
+describe('OLSKInternationalLocalizedStringCallback', function testOLSKInternationalLocalizedStringCallback() {
+
+	it('throws error if param1 not object', function() {
+		throws(function() {
+			mainModule.OLSKInternationalLocalizedStringCallback(null, []);
+		}, /OLSKErrorInputInvalid/);
+	});
+
+	it('throws error if param2 not array', function() {
+		throws(function() {
+			mainModule.OLSKInternationalLocalizedStringCallback({}, null);
+		}, /OLSKErrorInputInvalid/);
+	});
+
+	it('returns function', function() {
+		deepEqual(typeof mainModule.OLSKInternationalLocalizedStringCallback({}, []), 'function');
+	});
+
+	context('callback', function () {
+
+		it('throws error if param2 not array', function() {
+			throws(function() {
+				mainModule.OLSKInternationalLocalizedStringCallback({}, [])('alfa', null);
+			}, /OLSKErrorInputInvalid/);
+		});
+
+		it('returns first request locale compound', function() {
+			deepEqual(mainModule.OLSKInternationalLocalizedStringCallback({
+				en: {
+					alfa: 'bravo',
+				},
+				fr: {
+					alfa: 'charlie',
+				}
+			}, [])('alfa', ['fr-CA']), 'charlie');
+		});
+
+		it('returns first request locale', function() {
+			deepEqual(mainModule.OLSKInternationalLocalizedStringCallback({
+				en: {
+					alfa: 'bravo',
+				},
+				fr: {
+					alfa: 'charlie',
+				}
+			}, [])('alfa', ['fr']), 'charlie');
+		});
+
+		it('returns first fallback locale compound', function() {
+			deepEqual(mainModule.OLSKInternationalLocalizedStringCallback({
+				en: {
+					alfa: 'bravo',
+				},
+				fr: {
+					alfa: 'charlie',
+				}
+			}, ['fr-CA'])('alfa', []), 'charlie');
+		});
+
+		it('returns first fallback locale', function() {
+			deepEqual(mainModule.OLSKInternationalLocalizedStringCallback({
+				en: {
+					alfa: 'bravo',
+				},
+				fr: {
+					alfa: 'charlie',
+				}
+			}, ['fr'])('alfa', []), 'charlie');
+		});
+
+		it('returns first locale', function() {
+			deepEqual(mainModule.OLSKInternationalLocalizedStringCallback({
+				en: {
+					alfa: 'bravo',
+				},
+				fr: {
+					alfa: 'charlie',
+				}
+			}, [])('alfa', []), 'bravo');
+		});
+
+		it('returns missing', function() {
+			deepEqual(mainModule.OLSKInternationalLocalizedStringCallback({}, [])('alfa', []), 'TRANSLATION_MISSING');
+		});
+	
+	});
+
+});
