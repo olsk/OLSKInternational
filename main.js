@@ -43,7 +43,7 @@
 
 	exports.OLSKInternationalLanguageID = function(inputData) {
 		if (!exports.OLSKInternationalIsTranslationFileBasename(inputData)) {
-			throw new Error('OLSKErrorInputInvalid');
+			throw new Error('OLSKErrorInputNotValid');
 		}
 
 		return exports._OLSKInternationalLanguageID(inputData);
@@ -53,7 +53,7 @@
 
 	exports.OLSKInternationalSimplifiedLanguageCode = function(inputData) {
 		if (typeof inputData !== 'string') {
-			throw new Error('OLSKErrorInputInvalid');
+			throw new Error('OLSKErrorInputNotValid');
 		}
 
 		return inputData.split('-').shift();
@@ -74,7 +74,7 @@
 
 	exports.OLSKInternationalLocalizedString = function(translationKey, translationDictionary) {
 		if (typeof translationDictionary !== 'object' || translationDictionary === null) {
-			throw new Error('OLSKErrorInputInvalid');
+			throw new Error('OLSKErrorInputNotValid');
 		}
 
 		var localizedString = translationDictionary[translationKey];
@@ -98,11 +98,11 @@
 
 	exports.OLSKInternationalLocalizedStringCallback = function(dictionary, fallbackLocales) {
 		if (typeof dictionary !== 'object' || dictionary === null) {
-			throw new Error('OLSKErrorInputInvalid');
+			throw new Error('OLSKErrorInputNotValid');
 		}
 
 		if (!Array.isArray(fallbackLocales)) {
-			throw new Error('OLSKErrorInputInvalid');
+			throw new Error('OLSKErrorInputNotValid');
 		}
 
 		const _locales = Object.keys(dictionary).reverse().concat(...fallbackLocales.map(function (e) {
@@ -111,7 +111,7 @@
 
 		return function (signature, requestLocales) {
 			if (!Array.isArray(requestLocales)) {
-				throw new Error('OLSKErrorInputInvalid');
+				throw new Error('OLSKErrorInputNotValid');
 			}
 
 			let locales = _locales.concat(...requestLocales.map(function (e) {

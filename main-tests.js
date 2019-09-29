@@ -40,7 +40,7 @@ describe('OLSKInternationalLanguageID', function testOLSKInternationalLanguageID
 	it('throws error if not valid', function() {
 		throws(function() {
 			mainModule.OLSKInternationalLanguageID(null);
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns languageID', function() {
@@ -54,7 +54,7 @@ describe('OLSKInternationalSimplifiedLanguageCode', function testOLSKInternation
 	it('throws error if not string', function() {
 		throws(function() {
 			mainModule.OLSKInternationalSimplifiedLanguageCode(null);
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns input', function() {
@@ -72,7 +72,7 @@ describe('OLSKInternationalLocalizedString', function testOLSKInternationalLocal
 	it('throws error if param2 not object', function() {
 		throws(function() {
 			mainModule.OLSKInternationalLocalizedString('alpha', null);
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns localizedString', function() {
@@ -94,13 +94,13 @@ describe('OLSKInternationalLocalizedStringCallback', function testOLSKInternatio
 	it('throws error if param1 not object', function() {
 		throws(function() {
 			mainModule.OLSKInternationalLocalizedStringCallback(null, []);
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param2 not array', function() {
 		throws(function() {
 			mainModule.OLSKInternationalLocalizedStringCallback({}, null);
-		}, /OLSKErrorInputInvalid/);
+		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns function', function() {
@@ -112,7 +112,7 @@ describe('OLSKInternationalLocalizedStringCallback', function testOLSKInternatio
 		it('throws error if param2 not array', function() {
 			throws(function() {
 				mainModule.OLSKInternationalLocalizedStringCallback({}, [])('alfa', null);
-			}, /OLSKErrorInputInvalid/);
+			}, /OLSKErrorInputNotValid/);
 		});
 
 		it('returns first request locale compound', function() {
