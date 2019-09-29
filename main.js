@@ -53,7 +53,7 @@
 
 	exports.OLSKInternationalSimplifiedLanguageCode = function(inputData) {
 		if (typeof inputData !== 'string') {
-			throw 'OLSKErrorInputInvalid';
+			throw new Error('OLSKErrorInputInvalid');
 		}
 
 		return inputData.split('-').shift();
