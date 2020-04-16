@@ -71,18 +71,18 @@ describe('OLSKInternationalLocalizedString', function test_OLSKInternationalLoca
 
 	it('throws error if param2 not object', function() {
 		throws(function() {
-			mainModule.OLSKInternationalLocalizedString('alpha', null);
+			mainModule.OLSKInternationalLocalizedString('alfa', null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns localizedString', function() {
-		deepEqual(mainModule.OLSKInternationalLocalizedString('alpha', {
-			alpha: 'bravo',
+		deepEqual(mainModule.OLSKInternationalLocalizedString('alfa', {
+			alfa: 'bravo',
 		}), 'bravo');
 	});
 
 	it('returns alternate string if translation not available', function() {
-		deepEqual(mainModule.OLSKInternationalLocalizedString('alpha', {
+		deepEqual(mainModule.OLSKInternationalLocalizedString('alfa', {
 			charlie: 'bravo',
 		}), 'TRANSLATION_MISSING');
 	});
