@@ -2,7 +2,7 @@ const { throws, deepEqual } = require('assert');
 
 const mainModule = require('./main');
 
-describe('OLSKInternationalDefaultIdentifier', function testOLSKInternationalDefaultIdentifier() {
+describe('OLSKInternationalDefaultIdentifier', function test_OLSKInternationalDefaultIdentifier() {
 
 	it('returns string', function() {
 		deepEqual(mainModule.OLSKInternationalDefaultIdentifier(), 'i18n');
@@ -10,7 +10,7 @@ describe('OLSKInternationalDefaultIdentifier', function testOLSKInternationalDef
 
 });
 
-describe('OLSKInternationalIsTranslationFileBasename', function testOLSKInternationalIsTranslationFileBasename() {
+describe('OLSKInternationalIsTranslationFileBasename', function test_OLSKInternationalIsTranslationFileBasename() {
 
 	it('returns false if not string', function() {
 		deepEqual(mainModule.OLSKInternationalIsTranslationFileBasename(null), false);
@@ -35,7 +35,7 @@ describe('OLSKInternationalIsTranslationFileBasename', function testOLSKInternat
 
 });
 
-describe('OLSKInternationalLanguageID', function testOLSKInternationalLanguageID() {
+describe('OLSKInternationalLanguageID', function test_OLSKInternationalLanguageID() {
 
 	it('throws error if not valid', function() {
 		throws(function() {
@@ -49,7 +49,7 @@ describe('OLSKInternationalLanguageID', function testOLSKInternationalLanguageID
 
 });
 
-describe('OLSKInternationalSimplifiedLanguageCode', function testOLSKInternationalSimplifiedLanguageCode() {
+describe('OLSKInternationalSimplifiedLanguageCode', function test_OLSKInternationalSimplifiedLanguageCode() {
 
 	it('throws error if not string', function() {
 		throws(function() {
@@ -67,7 +67,7 @@ describe('OLSKInternationalSimplifiedLanguageCode', function testOLSKInternation
 
 });
 
-describe('OLSKInternationalLocalizedString', function testOLSKInternationalLocalizedString() {
+describe('OLSKInternationalLocalizedString', function test_OLSKInternationalLocalizedString() {
 
 	it('throws error if param2 not object', function() {
 		throws(function() {
@@ -89,7 +89,7 @@ describe('OLSKInternationalLocalizedString', function testOLSKInternationalLocal
 
 });
 
-describe('OLSKInternationalLocalizedStringCallback', function testOLSKInternationalLocalizedStringCallback() {
+describe('OLSKInternationalLocalizedStringCallback', function test_OLSKInternationalLocalizedStringCallback() {
 
 	it('throws error if param1 not object', function() {
 		throws(function() {
