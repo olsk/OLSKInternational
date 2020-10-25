@@ -154,7 +154,7 @@
 			return param2.reduce(function (coll, item) {
 				const key = mod.OLSKInternationalLanguageID(require('path').basename(item));
 
-				coll[key] = Object.assign(coll[key] || {}, param1.OLSKInternationalFileDelegateYAMLRead(require('fs').fileReadSync(item, 'utf8')))
+				coll[key] = Object.assign(coll[key] || {}, param1.OLSKInternationalFileDelegateYAMLRead(require('fs').readFileSync(item, 'utf8')))
 
 				return coll;
 			}, {});

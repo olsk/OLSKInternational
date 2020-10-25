@@ -307,10 +307,10 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 		deepEqual(__OLSKInternationalConstructedDictionary({}, []), {});
 	});
 
-	it('calls fileReadSync', function() {
+	it('calls readFileSync', function() {
 		const item = [];
 
-		require('fs').fileReadSync = (function () {
+		require('fs').readFileSync = (function () {
 			item.push(...arguments);
 			return '';
 		});
@@ -324,7 +324,7 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 	it('constructs dictionary', function() {
 		const alfa = Date.now().toString();
 
-		require('fs').fileReadSync = (function () {
+		require('fs').readFileSync = (function () {
 			return `alfa:${ alfa }`;
 		});
 
