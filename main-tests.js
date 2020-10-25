@@ -245,10 +245,10 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 
 });
 
-describe('OLSKInternationalPaths', function test_OLSKInternationalPaths() {
+describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 
-	const _OLSKInternationalPaths = function (inputData) {
-		return mainModule.OLSKInternationalPaths(Object.assign({
+	const __OLSKInternationalPaths = function (inputData) {
+		return mainModule._OLSKInternationalPaths(Object.assign({
 			OLSKInternationalFileDelegateDirectory: Math.random().toString(),
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				return [];
@@ -262,7 +262,7 @@ describe('OLSKInternationalPaths', function test_OLSKInternationalPaths() {
 
 	it('throws error if not valid', function() {
 		throws(function() {
-			mainModule.OLSKInternationalPaths({});
+			mainModule._OLSKInternationalPaths({});
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -270,7 +270,7 @@ describe('OLSKInternationalPaths', function test_OLSKInternationalPaths() {
 		const OLSKInternationalFileDelegateDirectory = Math.random().toString();
 		const item = [];
 
-		_OLSKInternationalPaths({
+		__OLSKInternationalPaths({
 			OLSKInternationalFileDelegateDirectory,	
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				item.push(...arguments);
@@ -287,7 +287,7 @@ describe('OLSKInternationalPaths', function test_OLSKInternationalPaths() {
 	it('returns OLSKInternationalFileDelegateGlobSync', function() {
 		const item = Date.now().toString() + '/i18n.en.yml';
 
-		deepEqual(_OLSKInternationalPaths({
+		deepEqual(__OLSKInternationalPaths({
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				return [item];
 			})
@@ -295,7 +295,7 @@ describe('OLSKInternationalPaths', function test_OLSKInternationalPaths() {
 	});
 
 	it('filters OLSKInternationalFileDelegateGlobSync', function() {
-		deepEqual(_OLSKInternationalPaths({
+		deepEqual(__OLSKInternationalPaths({
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				return [
 					Math.random().toString(),

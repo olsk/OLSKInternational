@@ -141,7 +141,7 @@
 			return false;
 		},
 
-		OLSKInternationalPaths (inputData) {
+		_OLSKInternationalPaths (inputData) {
 			if (mod.OLSKInternationalFileDelegateErrors(inputData)) {
 				throw new Error('OLSKErrorInputNotValid');
 			}
