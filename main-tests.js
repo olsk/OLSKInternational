@@ -2,6 +2,7 @@ const { throws, deepEqual } = require('assert');
 
 const mainModule = require('./main');
 
+const globSync = require('glob').sync;
 const readFileSync = require('fs').readFileSync;
 const writeFileSync = require('fs').writeFileSync;
 
@@ -698,6 +699,59 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 	});
 
 	afterEach(function () {
+		require('fs').readFileSync = readFileSync;
+		require('fs').writeFileSync = writeFileSync;
+	});
+
+});
+
+describe('OLSKInternationalAddControllerLanguageCode', function test_OLSKInternationalAddControllerLanguageCode() {
+
+	it('throws error if param1 not string', function() {
+		throws(function() {
+			mainModule.OLSKInternationalAddControllerLanguageCode(null, Math.random().toString());
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws error if param1 not filled', function() {
+		throws(function() {
+			mainModule.OLSKInternationalAddControllerLanguageCode(' ', Math.random().toString());
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws error if param2 not string', function() {
+		throws(function() {
+			mainModule.OLSKInternationalAddControllerLanguageCode(Math.random().toString(), null);
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws error if param2 not filled', function() {
+		throws(function() {
+			mainModule.OLSKInternationalAddControllerLanguageCode(Math.random().toString(), ' ');
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('calls globSync', function() {
+		const cwd = Math.random().toString();
+		const item = [];
+
+		require('glob').sync = (function () {
+			item.push(...arguments);
+
+			return [];
+		});
+
+		mainModule.OLSKInternationalAddControllerLanguageCode(cwd, Math.random().toString());
+
+		deepEqual(item, ['controller.js', {
+			cwd,
+			matchBase: true,
+			realpath: true,
+		}]);
+	});
+
+	afterEach(function () {
+		require('glob').sync = globSync;
 		require('fs').readFileSync = readFileSync;
 		require('fs').writeFileSync = writeFileSync;
 	});

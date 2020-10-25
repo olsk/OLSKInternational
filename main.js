@@ -222,6 +222,67 @@
 			});
 		},
 
+		OLSKInternationalAddControllerLanguageCode (cwd, languageID) {
+			if (typeof cwd !== 'string' || !cwd.trim()) {
+				throw new Error('OLSKErrorInputNotValid');
+			}
+
+			if (typeof languageID !== 'string' || !languageID.trim()) {
+				throw new Error('OLSKErrorInputNotValid');
+			}
+
+			const _require = require;
+
+			_require('glob').sync('controller.js', {
+				cwd,
+				matchBase: true,
+				realpath: true,
+			}).forEach(function (file) {
+				if (file.match(/.*(\.git|DS_Store|node_modules|vendor|__\w+)\/.*/i)) {
+					return
+				}
+
+				const item = _require(file);
+
+				if (typeof item.OLSKControllerRoutes !== 'function') {
+					return;
+				}
+
+				if (!(function(inputData) {
+					if (Array.isArray(inputData)) {
+						return inputData;
+					};
+
+					return Object.entries(inputData).reduce(function (coll, item) {
+						return coll.concat(Object.assign(item[1], {
+							OLSKRouteSignature: item[0],
+						}));
+					}, []);
+				})(item.OLSKControllerRoutes()).filter(function (e) {
+					return e.OLSKRouteLanguages;
+				}).filter(function (e) {
+					return !e.OLSKRouteLanguages.includes(languageID);
+				}).length) {
+					return
+				};
+
+				const match = _require('fs').readFileSync(file, 'utf8').match(/OLSKRouteLanguages: \[.*\]/g);
+
+				if (!match) {
+					throw new Error(`invalid OLSKRouteLanguages syntax in ${ e }`);
+				}
+
+				match.map(function (e) {
+					const match = e.match(/\[.*\]/);
+					return _require('fs').writeFileSync(file, _require('fs').readFileSync(file, 'utf8').replace(/OLSKRouteLanguages: \[.*\]/, `OLSKRouteLanguages: ['${JSON.parse(match[0].replace(/\'/g, '"')).concat(languageID).join('\', \'')}']`));
+				});
+			});
+
+			if (process.argv[2].endsWith('olsk-i18n-add')) {
+				process.exit();
+			}
+		},
+
 	};
 	
 	Object.assign(exports, mod);
