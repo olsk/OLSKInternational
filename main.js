@@ -146,7 +146,7 @@
 				throw new Error('OLSKErrorInputNotValid');
 			}
 
-			return inputData.OLSKInternationalFileDelegateGlobSync(`*${ mod.OLSKInternationalDefaultIdentifier() }*.y(a)ml`, {
+			return inputData.OLSKInternationalFileDelegateGlobSync(`**/*${ mod.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
 				cwd: inputData.OLSKInternationalFileDelegateDirectory,
 				realpath: true,
 			}).filter(function (e) {

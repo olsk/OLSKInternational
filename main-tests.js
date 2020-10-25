@@ -278,7 +278,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 			}),
 		});
 
-		deepEqual(item, [`*${ mainModule.OLSKInternationalDefaultIdentifier() }*.y(a)ml`, {
+		deepEqual(item, [`**/*${ mainModule.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
 			cwd: OLSKInternationalFileDelegateDirectory,
 			realpath: true,
 		}]);
