@@ -172,10 +172,16 @@
 			return this._OLSKInternationalConstructedDictionary(params, this._OLSKInternationalPaths(params, cwd));
 		},
 
-		_OLSKInternationalCompilationObject (params, cwd) {
+		_OLSKInternationalCompilationObject (params, cwd, languageID) {
 			const _require = require;
 
-			return this._OLSKInternationalPaths(params, cwd).reduce(function (coll, item) {
+			return this._OLSKInternationalPaths(params, cwd).filter(function (e) {
+				if (!languageID) {
+					return true;
+				}
+
+				return mod.OLSKInternationalLanguageID(_require('path').basename(e)) === languageID;
+			}).reduce(function (coll, item) {
 				return Object.assign(coll, {
 					[item]: params.OLSKInternationalFileDelegateYAMLRead(_require('fs').readFileSync(item, 'utf8')),
 				});

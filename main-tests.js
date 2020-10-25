@@ -436,12 +436,12 @@ describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionar
 
 describe('_OLSKInternationalCompilationObject', function test__OLSKInternationalCompilationObject() {
 
-	const __OLSKInternationalCompilationObject = function (params, cwd) {
+	const __OLSKInternationalCompilationObject = function (params, cwd, languageID) {
 		return Object.assign(Object.assign({}, mainModule), {
 			_OLSKInternationalPaths: params._OLSKInternationalPaths || (function () {}),
 		})._OLSKInternationalCompilationObject({
 			OLSKInternationalFileDelegateYAMLRead,
-		}, cwd);
+		}, cwd, languageID);
 	};
 
 	it('throws error if param1 not valid', function() {
@@ -495,6 +495,16 @@ describe('_OLSKInternationalCompilationObject', function test__OLSKInternational
 				alfa,
 			},
 		});
+	});
+
+	it('filters if param3', function() {
+		const path = 'alfa/i18n.en.yml';
+
+		deepEqual(__OLSKInternationalCompilationObject({
+			_OLSKInternationalPaths: (function () {
+				return [path];
+			}),
+		}, Math.random().toString(), 'fr'), {});
 	});
 
 	afterEach(function () {
