@@ -154,6 +154,31 @@
 			});
 		},
 
+		OLSKInternationalDictionary (param1, param2) {
+			if (mod.OLSKInternationalFileDelegateErrors(param1)) {
+				throw new Error('OLSKErrorInputNotValid');
+			}
+
+			if (!Array.isArray(param2)) {
+				throw new Error('OLSKErrorInputNotValid');
+			}
+
+			return param2.reduce(function (coll, item) {
+				const key = mod.OLSKInternationalLanguageID(param1.OLSKInternationalFileDelegatePathBasename(item));
+
+				coll[key] = Object.assign(coll[key] || {}, param1.OLSKInternationalFileDelegateYAMLRead(param1.OLSKInternationalFileDelegateFileRead(item, 'utf8')))
+
+				return coll;
+			}, {});
+
+			return param1.OLSKInternationalFileDelegateGlobSync(`*${ mod.OLSKInternationalDefaultIdentifier() }*.y(a)ml`, {
+				cwd: param1.OLSKInternationalFileDelegateDirectory,
+				realpath: true,
+			}).filter(function (e) {
+				return mod.OLSKInternationalIsTranslationFileBasename(param1.OLSKInternationalFileDelegatePathBasename(e));
+			});
+		},
+
 	};
 	
 	Object.assign(exports, mod);
