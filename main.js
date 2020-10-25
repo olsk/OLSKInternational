@@ -122,6 +122,10 @@
 				return true;
 			}
 
+			if (inputData.OLSKInternationalFileDelegateYAMLWrite && typeof inputData.OLSKInternationalFileDelegateYAMLWrite !== 'function') {
+				return true;
+			}
+
 			return false;
 		},
 

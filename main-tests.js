@@ -216,6 +216,22 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 		deepEqual(_OLSKInternationalFileDelegateErrors(), false);
 	});
 
+	context('OLSKInternationalFileDelegateYAMLWrite', function () {
+		
+		it('returns true if OLSKInternationalFileDelegateYAMLWrite not function', function() {
+			deepEqual(_OLSKInternationalFileDelegateErrors({
+				OLSKInternationalFileDelegateYAMLWrite: 'alfa',
+			}), true);
+		});
+
+		it('returns false', function() {
+			deepEqual(_OLSKInternationalFileDelegateErrors({
+				OLSKInternationalFileDelegateYAMLWrite: (function () {}),
+			}), false);
+		});
+	
+	});
+
 });
 
 describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
