@@ -134,11 +134,13 @@
 				throw new Error('OLSKErrorInputNotValid');
 			}
 
+			const _require = require;
+
 			return params.OLSKInternationalFileDelegateGlobSync(`**/*${ mod.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
 				cwd,
 				realpath: true,
 			}).filter(function (e) {
-				return mod.OLSKInternationalIsTranslationFileBasename(require('path').basename(e));
+				return mod.OLSKInternationalIsTranslationFileBasename(_require('path').basename(e));
 			});
 		},
 
@@ -151,10 +153,12 @@
 				throw new Error('OLSKErrorInputNotValid');
 			}
 
-			return param2.reduce(function (coll, item) {
-				const key = mod.OLSKInternationalLanguageID(require('path').basename(item));
+			const _require = require;
 
-				coll[key] = Object.assign(coll[key] || {}, param1.OLSKInternationalFileDelegateYAMLRead(require('fs').readFileSync(item, 'utf8')))
+			return param2.reduce(function (coll, item) {
+				const key = mod.OLSKInternationalLanguageID(_require('path').basename(item));
+
+				coll[key] = Object.assign(coll[key] || {}, param1.OLSKInternationalFileDelegateYAMLRead(_require('fs').readFileSync(item, 'utf8')))
 
 				return coll;
 			}, {});
