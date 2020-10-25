@@ -245,3 +245,64 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 
 });
 
+describe('OLSKInternationalPaths', function test_OLSKInternationalPaths() {
+
+	const _OLSKInternationalPaths = function (inputData) {
+		return mainModule.OLSKInternationalPaths(Object.assign({
+			OLSKInternationalFileDelegateDirectory: Math.random().toString(),
+			OLSKInternationalFileDelegateGlobSync: (function () {
+				return [];
+			}),
+			OLSKInternationalFileDelegatePathBasename: require('path').basename,
+			OLSKInternationalFileDelegateFileRead: (function () {}),
+			OLSKInternationalFileDelegateYAMLRead: (function () {}),
+			OLSKInternationalFileDelegateFileWrite: (function () {}),
+		}, inputData));
+	};
+
+	it('throws error if not valid', function() {
+		throws(function() {
+			mainModule.OLSKInternationalPaths({});
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('calls OLSKInternationalFileDelegateGlobSync', function() {
+		const OLSKInternationalFileDelegateDirectory = Math.random().toString();
+		const item = [];
+
+		_OLSKInternationalPaths({
+			OLSKInternationalFileDelegateDirectory,	
+			OLSKInternationalFileDelegateGlobSync: (function () {
+				item.push(...arguments);
+				return [];
+			}),
+		});
+
+		deepEqual(item, [`*${ mainModule.OLSKInternationalDefaultIdentifier() }*.y(a)ml`, {
+			cwd: OLSKInternationalFileDelegateDirectory,
+			realpath: true,
+		}]);
+	});
+
+	it('returns OLSKInternationalFileDelegateGlobSync', function() {
+		const item = Date.now().toString() + '/i18n.en.yml';
+
+		deepEqual(_OLSKInternationalPaths({
+			OLSKInternationalFileDelegateGlobSync: (function () {
+				return [item];
+			})
+		}), [item]);
+	});
+
+	it('filters OLSKInternationalFileDelegateGlobSync', function() {
+		deepEqual(_OLSKInternationalPaths({
+			OLSKInternationalFileDelegateGlobSync: (function () {
+				return [
+					Math.random().toString(),
+					'alfa/i18n.en.yml',
+				];
+			}),
+		}), ['alfa/i18n.en.yml']);
+	});
+
+});

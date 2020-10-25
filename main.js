@@ -141,6 +141,19 @@
 			return false;
 		},
 
+		OLSKInternationalPaths (inputData) {
+			if (mod.OLSKInternationalFileDelegateErrors(inputData)) {
+				throw new Error('OLSKErrorInputNotValid');
+			}
+
+			return inputData.OLSKInternationalFileDelegateGlobSync(`*${ mod.OLSKInternationalDefaultIdentifier() }*.y(a)ml`, {
+				cwd: inputData.OLSKInternationalFileDelegateDirectory,
+				realpath: true,
+			}).filter(function (e) {
+				return mod.OLSKInternationalIsTranslationFileBasename(inputData.OLSKInternationalFileDelegatePathBasename(e));
+			});
+		},
+
 	};
 	
 	Object.assign(exports, mod);
