@@ -672,7 +672,6 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 				bravo: Math.random().toString(),
 			},
 		};
-		const cwd = Math.random().toString();
 		const item = [];
 
 		require('fs').readFileSync = (function () {
@@ -682,10 +681,10 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 			item.push(Array.from(arguments));
 		});
 
-		_OLSKInternationalSpreadCompilationFile(cwd);
+		_OLSKInternationalSpreadCompilationFile(Math.random().toString());
 
 		deepEqual(item, Object.keys(compilation).map(function (e) {
-			return [require('path').join(cwd, e), OLSKInternationalFileDelegateYAMLDump(compilation[e])];
+			return [e, OLSKInternationalFileDelegateYAMLDump(compilation[e])];
 		}));
 	});
 

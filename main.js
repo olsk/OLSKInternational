@@ -218,7 +218,7 @@
 			const compilation = params.OLSKInternationalFileDelegateYAMLRead(_require('fs').readFileSync(_require('path').join(cwd, mod.OLSKInternationalDefaultIdentifier() + '-compilation.yml'), 'utf8'));
 
 			Object.keys(compilation).map(function (e) {
-				return _require('fs').writeFileSync(_require('path').join(cwd, e), params.OLSKInternationalFileDelegateYAMLDump(compilation[e]));
+				return _require('fs').writeFileSync(e, params.OLSKInternationalFileDelegateYAMLDump(compilation[e]));
 			});
 		},
 
