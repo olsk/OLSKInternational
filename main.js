@@ -178,6 +178,14 @@
 			}, {});
 		},
 
+		OLSKInternationalWriteCompilationFile (params, cwd) {
+			const _require = require;
+
+			const data = JSON.stringify(this._OLSKInternationalCompilationObject(params, cwd));
+
+			_require('fs').writeFileSync(_require('path').join(cwd, mod.OLSKInternationalDefaultIdentifier() + '-compilation.yml'), data);
+		},
+
 	};
 	
 	Object.assign(exports, mod);
