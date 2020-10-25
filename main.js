@@ -188,10 +188,10 @@
 			}, {});
 		},
 
-		OLSKInternationalWriteCompilationFile (params, cwd) {
+		OLSKInternationalWriteCompilationFile (params, cwd, languageID) {
 			const _require = require;
 
-			const data = params.OLSKInternationalFileDelegateYAMLDump(this._OLSKInternationalCompilationObject(params, cwd));
+			const data = params.OLSKInternationalFileDelegateYAMLDump(this._OLSKInternationalCompilationObject(params, cwd, languageID));
 
 			if (!params.OLSKInternationalFileDelegateYAMLDump) {
 				throw new Error('OLSKErrorInputNotValid');

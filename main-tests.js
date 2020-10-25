@@ -515,13 +515,13 @@ describe('_OLSKInternationalCompilationObject', function test__OLSKInternational
 
 describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationalWriteCompilationFile() {
 
-	const _OLSKInternationalWriteCompilationFile = function (params, cwd) {
+	const _OLSKInternationalWriteCompilationFile = function (params, cwd, languageID) {
 		return Object.assign(Object.assign({}, mainModule), {
 			_OLSKInternationalCompilationObject: params._OLSKInternationalCompilationObject || (function () {}),
 		}).OLSKInternationalWriteCompilationFile({
 			OLSKInternationalFileDelegateYAMLRead,
 			OLSKInternationalFileDelegateYAMLDump,
-		}, cwd);
+		}, cwd, languageID);
 	};
 
 	it('throws error if param1 not valid', function() {
@@ -558,7 +558,8 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 	});
 
 	it('calls _OLSKInternationalCompilationObject', function() {
-		const cwd = Date.now().toString();
+		const cwd = Math.random().toString();
+		const languageID = Math.random().toString();
 		const item = [];
 
 		require('fs').writeFileSync = (function () {});
@@ -568,12 +569,12 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 				item.push(...arguments);
 				return [];
 			}),
-		}, cwd);
+		}, cwd, languageID);
 
 		deepEqual(item, [{
 			OLSKInternationalFileDelegateYAMLRead,
 			OLSKInternationalFileDelegateYAMLDump,
-		}, cwd]);
+		}, cwd, languageID]);
 	});
 
 	it('calls writeFileSync', function() {
