@@ -184,7 +184,6 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 		return mainModule.OLSKInternationalFileDelegateErrors(Object.assign({
 			OLSKInternationalFileDelegateDirectory: Math.random().toString(),
 			OLSKInternationalFileDelegateGlobSync: (function () {}),
-			OLSKInternationalFileDelegateFileRead: (function () {}),
 			OLSKInternationalFileDelegateYAMLRead: (function () {}),
 			OLSKInternationalFileDelegateFileWrite: (function () {}),
 		}, inputData));
@@ -214,12 +213,6 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 		}), true);
 	});
 
-	it('returns true if OLSKInternationalFileDelegateFileRead not function', function() {
-		deepEqual(_OLSKInternationalFileDelegateErrors({
-			OLSKInternationalFileDelegateFileRead: null,
-		}), true);
-	});
-
 	it('returns true if OLSKInternationalFileDelegateYAMLRead not function', function() {
 		deepEqual(_OLSKInternationalFileDelegateErrors({
 			OLSKInternationalFileDelegateYAMLRead: null,
@@ -246,7 +239,6 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				return [];
 			}),
-			OLSKInternationalFileDelegateFileRead: (function () {}),
 			OLSKInternationalFileDelegateYAMLRead: (function () {}),
 			OLSKInternationalFileDelegateFileWrite: (function () {}),
 		}, inputData));
@@ -307,7 +299,6 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				return [];
 			}),
-			OLSKInternationalFileDelegateFileRead: (function () {}),
 			OLSKInternationalFileDelegateYAMLRead: (function () {}),
 			OLSKInternationalFileDelegateFileWrite: (function () {}),
 		}, param1), param2);
@@ -329,14 +320,15 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 		deepEqual(__OLSKInternationalConstructedDictionary({}, []), {});
 	});
 
-	it('calls OLSKInternationalFileDelegateFileRead', function() {
+	it('calls fileReadSync', function() {
 		const item = [];
 
+		require('fs').fileReadSync = (function () {
+			item.push(...arguments);
+			return '';
+		});
+
 		__OLSKInternationalConstructedDictionary({
-			OLSKInternationalFileDelegateFileRead: (function () {
-				item.push(...arguments);
-				return '';
-			}),
 		}, ['alfa/i18n.en.yml']);
 
 		deepEqual(item, ['alfa/i18n.en.yml', 'utf8']);
@@ -345,10 +337,11 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 	it('constructs dictionary', function() {
 		const alfa = Date.now().toString();
 
+		require('fs').fileReadSync = (function () {
+			return `alfa:${ alfa }`;
+		});
+
 		deepEqual(__OLSKInternationalConstructedDictionary({
-			OLSKInternationalFileDelegateFileRead: (function () {
-				return `alfa:${ alfa }`;
-			}),
 			OLSKInternationalFileDelegateYAMLRead: (function (inputData) {
 				return Object.fromEntries([inputData.split(':')]);
 			}),
