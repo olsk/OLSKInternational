@@ -12,6 +12,7 @@ const mod = {
 		require('./main.js').OLSKInternationalWriteCompilationFile({
 			OLSKInternationalFileDelegateGlobSync: require('glob').sync,
 			OLSKInternationalFileDelegateYAMLRead: require('js-yaml').safeLoad,
+			OLSKInternationalFileDelegateYAMLDump: require('js-yaml').safeDump,
 		}, mod._ValueDirectory);
 	},
 
