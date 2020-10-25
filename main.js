@@ -122,7 +122,7 @@
 				return true;
 			}
 
-			if (inputData.OLSKInternationalFileDelegateYAMLWrite && typeof inputData.OLSKInternationalFileDelegateYAMLWrite !== 'function') {
+			if (inputData.OLSKInternationalFileDelegateYAMLDump && typeof inputData.OLSKInternationalFileDelegateYAMLDump !== 'function') {
 				return true;
 			}
 
@@ -185,7 +185,11 @@
 		OLSKInternationalWriteCompilationFile (params, cwd) {
 			const _require = require;
 
-			const data = JSON.stringify(this._OLSKInternationalCompilationObject(params, cwd));
+			const data = params.OLSKInternationalFileDelegateYAMLDump(this._OLSKInternationalCompilationObject(params, cwd));
+
+			if (!params.OLSKInternationalFileDelegateYAMLDump) {
+				throw new Error('OLSKErrorInputNotValid');
+			}
 
 			_require('fs').writeFileSync(_require('path').join(cwd, mod.OLSKInternationalDefaultIdentifier() + '-compilation.yml'), data);
 		},
