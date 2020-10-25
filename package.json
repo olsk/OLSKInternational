@@ -1,4 +1,7 @@
 {
   "name": "OLSKInternational",
-  "main": "main.js"
+  "main": "main.js",
+  "bin": {
+    "olsk-international-compile": "./package-bin.js"
+  }
 }
