@@ -114,10 +114,6 @@
 				throw new Error('OLSKErrorInputNotValid');
 			}
 
-			if (typeof inputData.OLSKInternationalFileDelegateDirectory !== 'string' || !inputData.OLSKInternationalFileDelegateDirectory.trim()) {
-				return true;
-			}
-
 			if (typeof inputData.OLSKInternationalFileDelegateGlobSync !== 'function') {
 				return true;
 			}
@@ -129,13 +125,17 @@
 			return false;
 		},
 
-		_OLSKInternationalPaths (inputData) {
-			if (mod.OLSKInternationalFileDelegateErrors(inputData)) {
+		_OLSKInternationalPaths (params, cwd) {
+			if (mod.OLSKInternationalFileDelegateErrors(params)) {
 				throw new Error('OLSKErrorInputNotValid');
 			}
 
-			return inputData.OLSKInternationalFileDelegateGlobSync(`**/*${ mod.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
-				cwd: inputData.OLSKInternationalFileDelegateDirectory,
+			if (typeof cwd !== 'string' || !cwd.trim()) {
+				throw new Error('OLSKErrorInputNotValid');
+			}
+
+			return params.OLSKInternationalFileDelegateGlobSync(`**/*${ mod.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
+				cwd,
 				realpath: true,
 			}).filter(function (e) {
 				return mod.OLSKInternationalIsTranslationFileBasename(require('path').basename(e));
@@ -158,17 +158,10 @@
 
 				return coll;
 			}, {});
-
-			return param1.OLSKInternationalFileDelegateGlobSync(`*${ mod.OLSKInternationalDefaultIdentifier() }*.y(a)ml`, {
-				cwd: param1.OLSKInternationalFileDelegateDirectory,
-				realpath: true,
-			}).filter(function (e) {
-				return mod.OLSKInternationalIsTranslationFileBasename(require('path').basename(e));
-			});
 		},
 
-		OLSKInternationalDictionary (inputData) {
-			return this._OLSKInternationalConstructedDictionary(inputData, this._OLSKInternationalPaths(inputData));
+		OLSKInternationalDictionary (params, cwd) {
+			return this._OLSKInternationalConstructedDictionary(params, this._OLSKInternationalPaths(params, cwd));
 		},
 
 	};
