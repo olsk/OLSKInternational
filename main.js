@@ -200,6 +200,28 @@
 			_require('fs').writeFileSync(_require('path').join(cwd, mod.OLSKInternationalDefaultIdentifier() + '-compilation.yml'), data);
 		},
 
+		OLSKInternationalSpreadCompilationFile (params, cwd, languageID) {
+			if (mod.OLSKInternationalFileDelegateErrors(params)) {
+				throw new Error('OLSKErrorInputNotValid');
+			}
+
+			if (!params.OLSKInternationalFileDelegateYAMLDump) {
+				throw new Error('OLSKErrorInputNotValid');
+			}
+
+			if (typeof cwd !== 'string' || !cwd.trim()) {
+				throw new Error('OLSKErrorInputNotValid');
+			}
+
+			const _require = require;
+
+			const compilation = params.OLSKInternationalFileDelegateYAMLRead(_require('fs').readFileSync(_require('path').join(cwd, mod.OLSKInternationalDefaultIdentifier() + '-compilation.yml'), 'utf8'));
+
+			Object.keys(compilation).map(function (e) {
+				return _require('fs').writeFileSync(_require('path').join(cwd, e), params.OLSKInternationalFileDelegateYAMLDump(compilation[e]));
+			});
+		},
+
 	};
 	
 	Object.assign(exports, mod);

@@ -605,3 +605,102 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 	});
 
 });
+
+describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternationalSpreadCompilationFile() {
+
+	const _OLSKInternationalSpreadCompilationFile = function (cwd) {
+		return mainModule.OLSKInternationalSpreadCompilationFile({
+			OLSKInternationalFileDelegateGlobSync: (function () {}),
+			OLSKInternationalFileDelegateYAMLRead,
+			OLSKInternationalFileDelegateYAMLDump,
+		}, cwd);
+	};
+
+	it('throws error if param1 not valid', function() {
+		throws(function() {
+			mainModule.OLSKInternationalSpreadCompilationFile({});
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws error if param1 with no OLSKInternationalFileDelegateYAMLDump', function() {
+		throws(function() {
+			mainModule.OLSKInternationalSpreadCompilationFile({
+				OLSKInternationalFileDelegateYAMLRead,
+				OLSKInternationalFileDelegateYAMLDump: null,
+			}, Date.now().toString());
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws error if param2 not string', function() {
+		throws(function() {
+			mainModule.OLSKInternationalSpreadCompilationFile({
+				OLSKInternationalFileDelegateYAMLRead,
+				OLSKInternationalFileDelegateYAMLDump,
+			}, null)
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws error if param2 not filled', function() {
+		throws(function() {
+			mainModule.OLSKInternationalSpreadCompilationFile({
+				OLSKInternationalFileDelegateYAMLRead,
+				OLSKInternationalFileDelegateYAMLDump,
+			}, ' ')
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('calls readFileSync', function() {
+		const cwd = Date.now().toString();
+		const item = [];
+
+		require('fs').readFileSync = (function () {
+			item.push(...arguments);
+			return '{}';
+		});
+
+		_OLSKInternationalSpreadCompilationFile(cwd);
+
+		deepEqual(item, [require('path').join(cwd, mainModule.OLSKInternationalDefaultIdentifier() + '-compilation.yml'), 'utf8']);
+	});
+
+	it('calls writeFileSync', function() {
+		const compilation = {
+			alfa: {
+				bravo: Math.random().toString(),
+			},
+			charlie: {
+				bravo: Math.random().toString(),
+			},
+		};
+		const cwd = Math.random().toString();
+		const item = [];
+
+		require('fs').readFileSync = (function () {
+			return OLSKInternationalFileDelegateYAMLDump(compilation);
+		});
+		require('fs').writeFileSync = (function () {
+			item.push(Array.from(arguments));
+		});
+
+		_OLSKInternationalSpreadCompilationFile(cwd);
+
+		deepEqual(item, Object.keys(compilation).map(function (e) {
+			return [require('path').join(cwd, e), OLSKInternationalFileDelegateYAMLDump(compilation[e])];
+		}));
+	});
+
+	it('returns undefined', function() {
+		require('fs').readFileSync = (function () {
+			return '{}';
+		});
+		require('fs').writeFileSync = (function () {});
+
+		deepEqual(_OLSKInternationalSpreadCompilationFile(Date.now().toString()), undefined);
+	});
+
+	afterEach(function () {
+		require('fs').readFileSync = readFileSync;
+		require('fs').writeFileSync = writeFileSync;
+	});
+
+});
