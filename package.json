@@ -1,6 +1,10 @@
 {
   "name": "OLSKInternational",
   "main": "main.js",
+  "devDependencies": {
+    "js-yaml": "latest",
+    "glob": "latest"
+  },
   "bin": {
     "olsk-international-compile": "./package-bin.js"
   }
