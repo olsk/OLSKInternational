@@ -122,10 +122,6 @@
 				return true;
 			}
 
-			if (typeof inputData.OLSKInternationalFileDelegatePathBasename !== 'function') {
-				return true;
-			}
-
 			if (typeof inputData.OLSKInternationalFileDelegateFileRead !== 'function') {
 				return true;
 			}
@@ -150,7 +146,7 @@
 				cwd: inputData.OLSKInternationalFileDelegateDirectory,
 				realpath: true,
 			}).filter(function (e) {
-				return mod.OLSKInternationalIsTranslationFileBasename(inputData.OLSKInternationalFileDelegatePathBasename(e));
+				return mod.OLSKInternationalIsTranslationFileBasename(require('path').basename(e));
 			});
 		},
 
@@ -164,7 +160,7 @@
 			}
 
 			return param2.reduce(function (coll, item) {
-				const key = mod.OLSKInternationalLanguageID(param1.OLSKInternationalFileDelegatePathBasename(item));
+				const key = mod.OLSKInternationalLanguageID(require('path').basename(item));
 
 				coll[key] = Object.assign(coll[key] || {}, param1.OLSKInternationalFileDelegateYAMLRead(param1.OLSKInternationalFileDelegateFileRead(item, 'utf8')))
 
@@ -175,7 +171,7 @@
 				cwd: param1.OLSKInternationalFileDelegateDirectory,
 				realpath: true,
 			}).filter(function (e) {
-				return mod.OLSKInternationalIsTranslationFileBasename(param1.OLSKInternationalFileDelegatePathBasename(e));
+				return mod.OLSKInternationalIsTranslationFileBasename(require('path').basename(e));
 			});
 		},
 

@@ -184,7 +184,6 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 		return mainModule.OLSKInternationalFileDelegateErrors(Object.assign({
 			OLSKInternationalFileDelegateDirectory: Math.random().toString(),
 			OLSKInternationalFileDelegateGlobSync: (function () {}),
-			OLSKInternationalFileDelegatePathBasename: (function () {}),
 			OLSKInternationalFileDelegateFileRead: (function () {}),
 			OLSKInternationalFileDelegateYAMLRead: (function () {}),
 			OLSKInternationalFileDelegateFileWrite: (function () {}),
@@ -212,12 +211,6 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 	it('returns true if OLSKInternationalFileDelegateGlobSync not function', function() {
 		deepEqual(_OLSKInternationalFileDelegateErrors({
 			OLSKInternationalFileDelegateGlobSync: null,
-		}), true);
-	});
-
-	it('returns true if OLSKInternationalFileDelegatePathBasename not function', function() {
-		deepEqual(_OLSKInternationalFileDelegateErrors({
-			OLSKInternationalFileDelegatePathBasename: null,
 		}), true);
 	});
 
@@ -253,7 +246,6 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				return [];
 			}),
-			OLSKInternationalFileDelegatePathBasename: require('path').basename,
 			OLSKInternationalFileDelegateFileRead: (function () {}),
 			OLSKInternationalFileDelegateYAMLRead: (function () {}),
 			OLSKInternationalFileDelegateFileWrite: (function () {}),
@@ -315,7 +307,6 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				return [];
 			}),
-			OLSKInternationalFileDelegatePathBasename: require('path').basename,
 			OLSKInternationalFileDelegateFileRead: (function () {}),
 			OLSKInternationalFileDelegateYAMLRead: (function () {}),
 			OLSKInternationalFileDelegateFileWrite: (function () {}),
