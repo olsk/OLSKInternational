@@ -5,9 +5,7 @@ const mainModule = require('./main');
 const readFileSync = require('fs').readFileSync;
 const writeFileSync = require('fs').writeFileSync;
 
-const OLSKInternationalFileDelegateYAMLRead = (function (inputData) {
-	return Object.fromEntries([inputData.split(':')]);
-});
+const OLSKInternationalFileDelegateYAMLRead = JSON.parse;
 const OLSKInternationalFileDelegateYAMLDump = JSON.stringify;
 
 describe('OLSKInternationalDefaultIdentifier', function test_OLSKInternationalDefaultIdentifier() {
@@ -327,20 +325,15 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('returns object', function() {
-		deepEqual(__OLSKInternationalConstructedDictionary({}, []), {});
-	});
-
 	it('calls readFileSync', function() {
 		const item = [];
 
 		require('fs').readFileSync = (function () {
 			item.push(...arguments);
-			return '';
+			return '{}';
 		});
 
-		__OLSKInternationalConstructedDictionary({
-		}, ['alfa/i18n.en.yml']);
+		__OLSKInternationalConstructedDictionary({}, ['alfa/i18n.en.yml']);
 
 		deepEqual(item, ['alfa/i18n.en.yml', 'utf8']);
 	});
@@ -349,7 +342,7 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 		const alfa = Date.now().toString();
 
 		require('fs').readFileSync = (function () {
-			return `alfa:${ alfa }`;
+			return JSON.stringify({ alfa });
 		});
 
 		deepEqual(__OLSKInternationalConstructedDictionary({}, ['alfa/i18n.en.yml']), {
@@ -483,7 +476,7 @@ describe('_OLSKInternationalCompilationObject', function test__OLSKInternational
 		const alfa = Math.random().toString();
 
 		require('fs').readFileSync = (function () {
-			return `alfa:${ alfa }`;
+			return JSON.stringify({ alfa });
 		});
 
 		deepEqual(__OLSKInternationalCompilationObject({
