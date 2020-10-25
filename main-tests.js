@@ -2,6 +2,8 @@ const { throws, deepEqual } = require('assert');
 
 const mainModule = require('./main');
 
+const readFileSync = require('fs').readFileSync;
+
 describe('OLSKInternationalDefaultIdentifier', function test_OLSKInternationalDefaultIdentifier() {
 
 	it('returns string', function() {
@@ -337,6 +339,10 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 				alfa,
 			},
 		});
+	});
+
+	afterEach(function () {
+		require('fs').readFileSync = readFileSync;
 	});
 
 });
