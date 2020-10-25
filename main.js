@@ -126,10 +126,6 @@
 				return true;
 			}
 
-			if (typeof inputData.OLSKInternationalFileDelegateFileWrite !== 'function') {
-				return true;
-			}
-
 			return false;
 		},
 

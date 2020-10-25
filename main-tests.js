@@ -185,7 +185,6 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 			OLSKInternationalFileDelegateDirectory: Math.random().toString(),
 			OLSKInternationalFileDelegateGlobSync: (function () {}),
 			OLSKInternationalFileDelegateYAMLRead: (function () {}),
-			OLSKInternationalFileDelegateFileWrite: (function () {}),
 		}, inputData));
 	};
 
@@ -219,12 +218,6 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 		}), true);
 	});
 
-	it('returns true if OLSKInternationalFileDelegateFileWrite not function', function() {
-		deepEqual(_OLSKInternationalFileDelegateErrors({
-			OLSKInternationalFileDelegateFileWrite: null,
-		}), true);
-	});
-
 	it('returns false', function() {
 		deepEqual(_OLSKInternationalFileDelegateErrors(), false);
 	});
@@ -240,7 +233,6 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 				return [];
 			}),
 			OLSKInternationalFileDelegateYAMLRead: (function () {}),
-			OLSKInternationalFileDelegateFileWrite: (function () {}),
 		}, inputData));
 	};
 
@@ -300,7 +292,6 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 				return [];
 			}),
 			OLSKInternationalFileDelegateYAMLRead: (function () {}),
-			OLSKInternationalFileDelegateFileWrite: (function () {}),
 		}, param1), param2);
 	};
 
