@@ -369,3 +369,63 @@ describe('_OLSKInternationalDictionary', function test__OLSKInternationalDiction
 	});
 
 });
+
+describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionary() {
+
+	const _OLSKInternationalDictionary = function (inputData) {
+		return Object.assign(Object.assign({}, mainModule), {
+			_OLSKInternationalPaths: inputData._OLSKInternationalPaths || (function () {}),
+			_OLSKInternationalDictionary: inputData._OLSKInternationalDictionary || (function () {}),
+		}).OLSKInternationalDictionary(inputData.params);
+	};
+
+	it('throws error if not valid', function() {
+		throws(function() {
+			mainModule.OLSKInternationalDictionary({});
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('calls _OLSKInternationalPaths', function() {
+		const params = Date.now().toString();
+		const item = [];
+
+		_OLSKInternationalDictionary({
+			_OLSKInternationalPaths: (function () {
+				item.push(...arguments);
+				return '';
+			}),
+			params,
+		});
+
+		deepEqual(item, [params]);
+	});
+
+	it('calls _OLSKInternationalDictionary', function() {
+		const params = Date.now().toString();
+		const paths = [Date.now().toString()];
+		const item = [];
+
+		_OLSKInternationalDictionary({
+			_OLSKInternationalPaths: (function () {
+				return paths;
+			}),
+			_OLSKInternationalDictionary: (function () {
+				item.push(...arguments);
+			}),
+			params,
+		});
+
+		deepEqual(item, [params, paths]);
+	});
+
+	it('returns _OLSKInternationalDictionary', function() {
+		const item = Date.now().toString();
+
+		deepEqual(_OLSKInternationalDictionary({
+			_OLSKInternationalDictionary: (function () {
+				return item;
+			}),
+		}), item);
+	});
+
+});

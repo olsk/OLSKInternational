@@ -179,6 +179,10 @@
 			});
 		},
 
+		OLSKInternationalDictionary (inputData) {
+			return this._OLSKInternationalDictionary(inputData, this._OLSKInternationalPaths(inputData));
+		},
+
 	};
 	
 	Object.assign(exports, mod);
