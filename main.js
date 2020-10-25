@@ -168,6 +168,16 @@
 			return this._OLSKInternationalConstructedDictionary(params, this._OLSKInternationalPaths(params, cwd));
 		},
 
+		OLSKInternationalFileCompilation (params, cwd) {
+			const _require = require;
+
+			return this._OLSKInternationalPaths(params, cwd).reduce(function (coll, item) {
+				return Object.assign(coll, {
+					[item]: params.OLSKInternationalFileDelegateYAMLRead(_require('fs').readFileSync(item, 'utf8')),
+				});
+			}, {});
+		},
+
 	};
 	
 	Object.assign(exports, mod);

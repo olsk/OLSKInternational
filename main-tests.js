@@ -4,6 +4,10 @@ const mainModule = require('./main');
 
 const readFileSync = require('fs').readFileSync;
 
+const OLSKInternationalFileDelegateYAMLRead = (function (inputData) {
+	return Object.fromEntries([inputData.split(':')]);
+});
+
 describe('OLSKInternationalDefaultIdentifier', function test_OLSKInternationalDefaultIdentifier() {
 
 	it('returns string', function() {
@@ -185,7 +189,7 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 	const _OLSKInternationalFileDelegateErrors = function (inputData) {
 		return mainModule.OLSKInternationalFileDelegateErrors(Object.assign({
 			OLSKInternationalFileDelegateGlobSync: (function () {}),
-			OLSKInternationalFileDelegateYAMLRead: (function () {}),
+			OLSKInternationalFileDelegateYAMLRead,
 		}, inputData));
 	};
 
@@ -220,7 +224,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				return [];
 			}),
-			OLSKInternationalFileDelegateYAMLRead: (function () {}),
+			OLSKInternationalFileDelegateYAMLRead,
 		}, params), cwd);
 	};
 
@@ -289,7 +293,7 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				return [];
 			}),
-			OLSKInternationalFileDelegateYAMLRead: (function () {}),
+			OLSKInternationalFileDelegateYAMLRead,
 		}, param1), param2);
 	};
 
@@ -330,11 +334,7 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 			return `alfa:${ alfa }`;
 		});
 
-		deepEqual(__OLSKInternationalConstructedDictionary({
-			OLSKInternationalFileDelegateYAMLRead: (function (inputData) {
-				return Object.fromEntries([inputData.split(':')]);
-			}),
-		}, ['alfa/i18n.en.yml']), {
+		deepEqual(__OLSKInternationalConstructedDictionary({}, ['alfa/i18n.en.yml']), {
 			en: {
 				alfa,
 			},
@@ -412,6 +412,75 @@ describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionar
 				return item;
 			}),
 		}), item);
+	});
+
+});
+
+describe('OLSKInternationalFileCompilation', function test_OLSKInternationalFileCompilation() {
+
+	const _OLSKInternationalFileCompilation = function (params, cwd) {
+		return Object.assign(Object.assign({}, mainModule), {
+			_OLSKInternationalPaths: params._OLSKInternationalPaths || (function () {}),
+		}).OLSKInternationalFileCompilation({
+			OLSKInternationalFileDelegateYAMLRead,
+		}, cwd);
+	};
+
+	it('throws error if param1 not valid', function() {
+		throws(function() {
+			mainModule.OLSKInternationalFileCompilation({});
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws error if param2 not string', function() {
+		throws(function() {
+			mainModule.OLSKInternationalFileCompilation({}, null)
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws error if param2 not filled', function() {
+		throws(function() {
+			mainModule.OLSKInternationalFileCompilation({}, ' ')
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('calls _OLSKInternationalPaths', function() {
+		const cwd = Date.now().toString();
+		const item = [];
+
+		_OLSKInternationalFileCompilation({
+			_OLSKInternationalPaths: (function () {
+				item.push(...arguments);
+				return [];
+			}),
+		}, cwd);
+
+		deepEqual(item, [{
+			OLSKInternationalFileDelegateYAMLRead,
+		}, cwd]);
+	});
+
+	it('returns object', function() {
+		const path = Date.now().toString();
+		const alfa = Math.random().toString();
+
+		require('fs').readFileSync = (function () {
+			return `alfa:${ alfa }`;
+		});
+
+		deepEqual(_OLSKInternationalFileCompilation({
+			_OLSKInternationalPaths: (function () {
+				return [path];
+			}),
+		}), {
+			[path]: {
+				alfa,
+			},
+		});
+	});
+
+	afterEach(function () {
+		require('fs').readFileSync = readFileSync;
 	});
 
 });
