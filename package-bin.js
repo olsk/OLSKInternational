@@ -25,20 +25,16 @@ const mod = {
 		require('./main.js').OLSKInternationalSpreadCompilationFile(mod._DataFileDelegate, mod._ValueDirectory);
 	},
 
+	ControlAdd(args) {
+		require('./main.js').OLSKInternationalAddControllerLanguageCode(mod._ValueDirectory, args[3]);
+	},
+
 	// SETUP
 
 	SetupEverything () {
 		mod.SetupValueDirectory();
 
 		mod.SetupValueLanguageID();
-
-		if (process.argv[1].endsWith('olsk-i18n-compile')) {
-			return mod.ControlCompile();
-		}
-
-		if (process.argv[1].endsWith('olsk-i18n-spread')) {
-			return mod.ControlSpread();
-		}
 	},
 
 	SetupValueDirectory () {
@@ -57,6 +53,18 @@ const mod = {
 
 	LifecycleScriptDidLoad() {
 		mod.SetupEverything();
+
+		if (process.argv[1].endsWith('olsk-i18n-compile')) {
+			return mod.ControlCompile();
+		}
+
+		if (process.argv[1].endsWith('olsk-i18n-spread')) {
+			return mod.ControlSpread();
+		}
+
+		if (process.argv[1].endsWith('olsk-i18n-add')) {
+			return mod.ControlAdd(process.argv);
+		}
 	},
 
 };
