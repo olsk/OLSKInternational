@@ -177,3 +177,71 @@ describe('OLSKInternationalLocalizedStringCallback', function test_OLSKInternati
 	});
 
 });
+
+describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalFileDelegateErrors() {
+
+	const _OLSKInternationalFileDelegateErrors = function (inputData) {
+		return mainModule.OLSKInternationalFileDelegateErrors(Object.assign({
+			OLSKInternationalFileDelegateDirectory: Math.random().toString(),
+			OLSKInternationalFileDelegateGlobSync: (function () {}),
+			OLSKInternationalFileDelegatePathBasename: (function () {}),
+			OLSKInternationalFileDelegateFileRead: (function () {}),
+			OLSKInternationalFileDelegateYAMLRead: (function () {}),
+			OLSKInternationalFileDelegateFileWrite: (function () {}),
+		}, inputData));
+	};
+
+	it('throws error if not object', function() {
+		throws(function() {
+			mainModule.OLSKInternationalFileDelegateErrors(null);
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('returns true if OLSKInternationalFileDelegateDirectory not string', function() {
+		deepEqual(_OLSKInternationalFileDelegateErrors({
+			OLSKInternationalFileDelegateDirectory: null,
+		}), true);
+	});
+
+	it('returns true if OLSKInternationalFileDelegateDirectory not filled', function() {
+		deepEqual(_OLSKInternationalFileDelegateErrors({
+			OLSKInternationalFileDelegateDirectory: ' ',
+		}), true);
+	});
+
+	it('returns true if OLSKInternationalFileDelegateGlobSync not function', function() {
+		deepEqual(_OLSKInternationalFileDelegateErrors({
+			OLSKInternationalFileDelegateGlobSync: null,
+		}), true);
+	});
+
+	it('returns true if OLSKInternationalFileDelegatePathBasename not function', function() {
+		deepEqual(_OLSKInternationalFileDelegateErrors({
+			OLSKInternationalFileDelegatePathBasename: null,
+		}), true);
+	});
+
+	it('returns true if OLSKInternationalFileDelegateFileRead not function', function() {
+		deepEqual(_OLSKInternationalFileDelegateErrors({
+			OLSKInternationalFileDelegateFileRead: null,
+		}), true);
+	});
+
+	it('returns true if OLSKInternationalFileDelegateYAMLRead not function', function() {
+		deepEqual(_OLSKInternationalFileDelegateErrors({
+			OLSKInternationalFileDelegateYAMLRead: null,
+		}), true);
+	});
+
+	it('returns true if OLSKInternationalFileDelegateFileWrite not function', function() {
+		deepEqual(_OLSKInternationalFileDelegateErrors({
+			OLSKInternationalFileDelegateFileWrite: null,
+		}), true);
+	});
+
+	it('returns false', function() {
+		deepEqual(_OLSKInternationalFileDelegateErrors(), false);
+	});
+
+});
+

@@ -109,6 +109,38 @@
 			};
 		},
 
+		OLSKInternationalFileDelegateErrors (inputData) {
+			if (typeof inputData !== 'object' || inputData === null) {
+				throw new Error('OLSKErrorInputNotValid');
+			}
+
+			if (typeof inputData.OLSKInternationalFileDelegateDirectory !== 'string' || !inputData.OLSKInternationalFileDelegateDirectory.trim()) {
+				return true;
+			}
+
+			if (typeof inputData.OLSKInternationalFileDelegateGlobSync !== 'function') {
+				return true;
+			}
+
+			if (typeof inputData.OLSKInternationalFileDelegatePathBasename !== 'function') {
+				return true;
+			}
+
+			if (typeof inputData.OLSKInternationalFileDelegateFileRead !== 'function') {
+				return true;
+			}
+
+			if (typeof inputData.OLSKInternationalFileDelegateYAMLRead !== 'function') {
+				return true;
+			}
+
+			if (typeof inputData.OLSKInternationalFileDelegateFileWrite !== 'function') {
+				return true;
+			}
+
+			return false;
+		},
+
 	};
 	
 	Object.assign(exports, mod);
