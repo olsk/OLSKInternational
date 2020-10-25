@@ -416,31 +416,31 @@ describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionar
 
 });
 
-describe('OLSKInternationalFileCompilation', function test_OLSKInternationalFileCompilation() {
+describe('_OLSKInternationalCompilationObject', function test__OLSKInternationalCompilationObject() {
 
-	const _OLSKInternationalFileCompilation = function (params, cwd) {
+	const __OLSKInternationalCompilationObject = function (params, cwd) {
 		return Object.assign(Object.assign({}, mainModule), {
 			_OLSKInternationalPaths: params._OLSKInternationalPaths || (function () {}),
-		}).OLSKInternationalFileCompilation({
+		})._OLSKInternationalCompilationObject({
 			OLSKInternationalFileDelegateYAMLRead,
 		}, cwd);
 	};
 
 	it('throws error if param1 not valid', function() {
 		throws(function() {
-			mainModule.OLSKInternationalFileCompilation({});
+			mainModule._OLSKInternationalCompilationObject({});
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param2 not string', function() {
 		throws(function() {
-			mainModule.OLSKInternationalFileCompilation({}, null)
+			mainModule._OLSKInternationalCompilationObject({}, null)
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param2 not filled', function() {
 		throws(function() {
-			mainModule.OLSKInternationalFileCompilation({}, ' ')
+			mainModule._OLSKInternationalCompilationObject({}, ' ')
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -448,7 +448,7 @@ describe('OLSKInternationalFileCompilation', function test_OLSKInternationalFile
 		const cwd = Date.now().toString();
 		const item = [];
 
-		_OLSKInternationalFileCompilation({
+		__OLSKInternationalCompilationObject({
 			_OLSKInternationalPaths: (function () {
 				item.push(...arguments);
 				return [];
@@ -468,7 +468,7 @@ describe('OLSKInternationalFileCompilation', function test_OLSKInternationalFile
 			return `alfa:${ alfa }`;
 		});
 
-		deepEqual(_OLSKInternationalFileCompilation({
+		deepEqual(__OLSKInternationalCompilationObject({
 			_OLSKInternationalPaths: (function () {
 				return [path];
 			}),

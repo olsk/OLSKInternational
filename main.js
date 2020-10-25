@@ -168,7 +168,7 @@
 			return this._OLSKInternationalConstructedDictionary(params, this._OLSKInternationalPaths(params, cwd));
 		},
 
-		OLSKInternationalFileCompilation (params, cwd) {
+		_OLSKInternationalCompilationObject (params, cwd) {
 			const _require = require;
 
 			return this._OLSKInternationalPaths(params, cwd).reduce(function (coll, item) {
