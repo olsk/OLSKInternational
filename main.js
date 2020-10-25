@@ -154,7 +154,7 @@
 			});
 		},
 
-		_OLSKInternationalDictionary (param1, param2) {
+		_OLSKInternationalConstructedDictionary (param1, param2) {
 			if (mod.OLSKInternationalFileDelegateErrors(param1)) {
 				throw new Error('OLSKErrorInputNotValid');
 			}
@@ -180,7 +180,7 @@
 		},
 
 		OLSKInternationalDictionary (inputData) {
-			return this._OLSKInternationalDictionary(inputData, this._OLSKInternationalPaths(inputData));
+			return this._OLSKInternationalConstructedDictionary(inputData, this._OLSKInternationalPaths(inputData));
 		},
 
 	};

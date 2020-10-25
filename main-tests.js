@@ -307,10 +307,10 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 
 });
 
-describe('_OLSKInternationalDictionary', function test__OLSKInternationalDictionary() {
+describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternationalConstructedDictionary() {
 
-	const __OLSKInternationalDictionary = function (param1, param2) {
-		return mainModule._OLSKInternationalDictionary(Object.assign({
+	const __OLSKInternationalConstructedDictionary = function (param1, param2) {
+		return mainModule._OLSKInternationalConstructedDictionary(Object.assign({
 			OLSKInternationalFileDelegateDirectory: Math.random().toString(),
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				return [];
@@ -324,24 +324,24 @@ describe('_OLSKInternationalDictionary', function test__OLSKInternationalDiction
 
 	it('throws error if param1 not valid', function() {
 		throws(function() {
-			mainModule._OLSKInternationalDictionary({}, []);
+			mainModule._OLSKInternationalConstructedDictionary({}, []);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param2 not array', function() {
 		throws(function() {
-			__OLSKInternationalDictionary({}, null);
+			__OLSKInternationalConstructedDictionary({}, null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns object', function() {
-		deepEqual(__OLSKInternationalDictionary({}, []), {});
+		deepEqual(__OLSKInternationalConstructedDictionary({}, []), {});
 	});
 
 	it('calls OLSKInternationalFileDelegateFileRead', function() {
 		const item = [];
 
-		__OLSKInternationalDictionary({
+		__OLSKInternationalConstructedDictionary({
 			OLSKInternationalFileDelegateFileRead: (function () {
 				item.push(...arguments);
 				return '';
@@ -354,7 +354,7 @@ describe('_OLSKInternationalDictionary', function test__OLSKInternationalDiction
 	it('constructs dictionary', function() {
 		const alfa = Date.now().toString();
 
-		deepEqual(__OLSKInternationalDictionary({
+		deepEqual(__OLSKInternationalConstructedDictionary({
 			OLSKInternationalFileDelegateFileRead: (function () {
 				return `alfa:${ alfa }`;
 			}),
@@ -375,7 +375,7 @@ describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionar
 	const _OLSKInternationalDictionary = function (inputData) {
 		return Object.assign(Object.assign({}, mainModule), {
 			_OLSKInternationalPaths: inputData._OLSKInternationalPaths || (function () {}),
-			_OLSKInternationalDictionary: inputData._OLSKInternationalDictionary || (function () {}),
+			_OLSKInternationalConstructedDictionary: inputData._OLSKInternationalConstructedDictionary || (function () {}),
 		}).OLSKInternationalDictionary(inputData.params);
 	};
 
@@ -400,7 +400,7 @@ describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionar
 		deepEqual(item, [params]);
 	});
 
-	it('calls _OLSKInternationalDictionary', function() {
+	it('calls _OLSKInternationalConstructedDictionary', function() {
 		const params = Date.now().toString();
 		const paths = [Date.now().toString()];
 		const item = [];
@@ -409,7 +409,7 @@ describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionar
 			_OLSKInternationalPaths: (function () {
 				return paths;
 			}),
-			_OLSKInternationalDictionary: (function () {
+			_OLSKInternationalConstructedDictionary: (function () {
 				item.push(...arguments);
 			}),
 			params,
@@ -418,11 +418,11 @@ describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionar
 		deepEqual(item, [params, paths]);
 	});
 
-	it('returns _OLSKInternationalDictionary', function() {
+	it('returns _OLSKInternationalConstructedDictionary', function() {
 		const item = Date.now().toString();
 
 		deepEqual(_OLSKInternationalDictionary({
-			_OLSKInternationalDictionary: (function () {
+			_OLSKInternationalConstructedDictionary: (function () {
 				return item;
 			}),
 		}), item);
