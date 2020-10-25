@@ -32,11 +32,11 @@ const mod = {
 
 		mod.SetupValueLanguageID();
 
-		if (process.argv[1].endsWith('olsk-international-compile')) {
+		if (process.argv[1].endsWith('olsk-i18n-compile')) {
 			return mod.ControlCompile();
 		}
 
-		if (process.argv[1].endsWith('olsk-international-spread')) {
+		if (process.argv[1].endsWith('olsk-i18n-spread')) {
 			return mod.ControlSpread();
 		}
 	},

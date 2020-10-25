@@ -6,7 +6,7 @@
     "glob": "latest"
   },
   "bin": {
-    "olsk-international-compile": "./package-bin.js",
-    "olsk-international-spread": "./package-bin.js"
+    "olsk-i18n-compile": "./package-bin.js",
+    "olsk-i18n-spread": "./package-bin.js"
   }
 }
