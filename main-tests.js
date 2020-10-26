@@ -6,7 +6,6 @@ const globSync = require('glob').sync;
 const readFileSync = require('fs').readFileSync;
 const writeFileSync = require('fs').writeFileSync;
 
-const OLSKInternationalFileDelegateYAMLRead = JSON.parse;
 const OLSKInternationalFileDelegateYAMLDump = JSON.stringify;
 
 describe('OLSKInternationalDefaultIdentifier', function test_OLSKInternationalDefaultIdentifier() {
@@ -189,7 +188,6 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 
 	const _OLSKInternationalFileDelegateErrors = function (inputData) {
 		return mod.OLSKInternationalFileDelegateErrors(Object.assign({
-			OLSKInternationalFileDelegateYAMLRead,
 		}, inputData));
 	};
 
@@ -197,12 +195,6 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 		throws(function() {
 			mod.OLSKInternationalFileDelegateErrors(null);
 		}, /OLSKErrorInputNotValid/);
-	});
-
-	it('returns true if OLSKInternationalFileDelegateYAMLRead not function', function() {
-		deepEqual(_OLSKInternationalFileDelegateErrors({
-			OLSKInternationalFileDelegateYAMLRead: null,
-		}), true);
 	});
 
 	it('returns false', function() {
@@ -231,15 +223,8 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 
 	const __OLSKInternationalPaths = function (params, cwd = Math.random().toString()) {
 		return mod._OLSKInternationalPaths(Object.assign({
-			OLSKInternationalFileDelegateYAMLRead,
 		}, params), cwd);
 	};
-
-	it('throws error if param1 not valid', function() {
-		throws(function() {
-			mod._OLSKInternationalPaths({}, Math.random().toString());
-		}, /OLSKErrorInputNotValid/);
-	});
 
 	it('throws error if param2 not string', function() {
 		throws(function() {
@@ -301,15 +286,8 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 
 	const __OLSKInternationalConstructedDictionary = function (param1, param2) {
 		return mod._OLSKInternationalConstructedDictionary(Object.assign({
-			OLSKInternationalFileDelegateYAMLRead,
 		}, param1), param2);
 	};
-
-	it('throws error if param1 not valid', function() {
-		throws(function() {
-			mod._OLSKInternationalConstructedDictionary({}, []);
-		}, /OLSKErrorInputNotValid/);
-	});
 
 	it('throws error if param2 not array', function() {
 		throws(function() {
@@ -425,7 +403,6 @@ describe('_OLSKInternationalCompilationObject', function test__OLSKInternational
 		return Object.assign(Object.assign({}, mod), {
 			_OLSKInternationalPaths: params._OLSKInternationalPaths || (function () {}),
 		})._OLSKInternationalCompilationObject({
-			OLSKInternationalFileDelegateYAMLRead,
 		}, cwd, languageID);
 	};
 
@@ -459,7 +436,6 @@ describe('_OLSKInternationalCompilationObject', function test__OLSKInternational
 		}, cwd);
 
 		deepEqual(item, [{
-			OLSKInternationalFileDelegateYAMLRead,
 		}, cwd]);
 	});
 
@@ -524,7 +500,6 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 		return Object.assign(Object.assign({}, mod), {
 			_OLSKInternationalCompilationObject: params._OLSKInternationalCompilationObject || (function () {}),
 		}).OLSKInternationalWriteCompilationFile({
-			OLSKInternationalFileDelegateYAMLRead,
 			OLSKInternationalFileDelegateYAMLDump,
 		}, cwd, languageID);
 	};
@@ -538,7 +513,6 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 	it.skip('throws error if param1 with no OLSKInternationalFileDelegateYAMLDump', function() {
 		throws(function() {
 			mod.OLSKInternationalWriteCompilationFile({
-				OLSKInternationalFileDelegateYAMLRead,
 				OLSKInternationalFileDelegateYAMLDump: null,
 			}, Date.now().toString());
 		}, /OLSKErrorInputNotValid/);
@@ -547,7 +521,6 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 	it('throws error if param2 not string', function() {
 		throws(function() {
 			mod.OLSKInternationalWriteCompilationFile({
-				OLSKInternationalFileDelegateYAMLRead,
 				OLSKInternationalFileDelegateYAMLDump,
 			}, null)
 		}, /OLSKErrorInputNotValid/);
@@ -556,7 +529,6 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 	it('throws error if param2 not filled', function() {
 		throws(function() {
 			mod.OLSKInternationalWriteCompilationFile({
-				OLSKInternationalFileDelegateYAMLRead,
 				OLSKInternationalFileDelegateYAMLDump,
 			}, ' ')
 		}, /OLSKErrorInputNotValid/);
@@ -577,7 +549,6 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 		}, cwd, languageID);
 
 		deepEqual(item, [{
-			OLSKInternationalFileDelegateYAMLRead,
 			OLSKInternationalFileDelegateYAMLDump,
 		}, cwd, languageID]);
 	});
@@ -622,7 +593,6 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 
 	const _OLSKInternationalSpreadCompilationFile = function (cwd) {
 		return mod.OLSKInternationalSpreadCompilationFile({
-			OLSKInternationalFileDelegateYAMLRead,
 			OLSKInternationalFileDelegateYAMLDump,
 		}, cwd);
 	};
@@ -636,7 +606,6 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 	it('throws error if param1 with no OLSKInternationalFileDelegateYAMLDump', function() {
 		throws(function() {
 			mod.OLSKInternationalSpreadCompilationFile({
-				OLSKInternationalFileDelegateYAMLRead,
 				OLSKInternationalFileDelegateYAMLDump: null,
 			}, Date.now().toString());
 		}, /OLSKErrorInputNotValid/);
@@ -645,7 +614,6 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 	it('throws error if param2 not string', function() {
 		throws(function() {
 			mod.OLSKInternationalSpreadCompilationFile({
-				OLSKInternationalFileDelegateYAMLRead,
 				OLSKInternationalFileDelegateYAMLDump,
 			}, null)
 		}, /OLSKErrorInputNotValid/);
@@ -654,7 +622,6 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 	it('throws error if param2 not filled', function() {
 		throws(function() {
 			mod.OLSKInternationalSpreadCompilationFile({
-				OLSKInternationalFileDelegateYAMLRead,
 				OLSKInternationalFileDelegateYAMLDump,
 			}, ' ')
 		}, /OLSKErrorInputNotValid/);

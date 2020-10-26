@@ -10,7 +10,6 @@ const mod = {
 	// DATA
 
 	_DataFileDelegate: {
-		OLSKInternationalFileDelegateYAMLRead: require('js-yaml').safeLoad,
 		OLSKInternationalFileDelegateYAMLDump: require('js-yaml').safeDump,
 	},
 

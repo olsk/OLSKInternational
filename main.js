@@ -114,10 +114,6 @@
 				throw new Error('OLSKErrorInputNotValid');
 			}
 
-			if (typeof inputData.OLSKInternationalFileDelegateYAMLRead !== 'function') {
-				return true;
-			}
-
 			if (inputData.OLSKInternationalFileDelegateYAMLDump && typeof inputData.OLSKInternationalFileDelegateYAMLDump !== 'function') {
 				return true;
 			}
@@ -158,7 +154,7 @@
 			return param2.reduce(function (coll, item) {
 				const key = mod.OLSKInternationalLanguageID(_require('path').basename(item));
 
-				coll[key] = Object.assign(coll[key] || {}, param1.OLSKInternationalFileDelegateYAMLRead(_require('fs').readFileSync(item, 'utf8')))
+				coll[key] = Object.assign(coll[key] || {}, _require('js-yaml').safeLoad(_require('fs').readFileSync(item, 'utf8')))
 
 				return coll;
 			}, {});
@@ -179,7 +175,7 @@
 				return mod.OLSKInternationalLanguageID(_require('path').basename(e)) === languageID;
 			}).reduce(function (coll, item) {
 				return Object.assign(coll, {
-					[item]: params.OLSKInternationalFileDelegateYAMLRead(_require('fs').readFileSync(item, 'utf8')),
+					[item]: _require('js-yaml').safeLoad(_require('fs').readFileSync(item, 'utf8')),
 				});
 			}, {});
 		},
@@ -220,7 +216,7 @@
 
 			const _require = require;
 
-			const compilation = params.OLSKInternationalFileDelegateYAMLRead(_require('fs').readFileSync(mod._OLSKInternationalCompilationFilePath(cwd), 'utf8'));
+			const compilation = _require('js-yaml').safeLoad(_require('fs').readFileSync(mod._OLSKInternationalCompilationFilePath(cwd), 'utf8'));
 
 			Object.keys(compilation).map(function (e) {
 				return _require('fs').writeFileSync(e, params.OLSKInternationalFileDelegateYAMLDump(compilation[e]));
