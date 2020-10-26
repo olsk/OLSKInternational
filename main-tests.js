@@ -507,6 +507,26 @@ describe('_OLSKInternationalCompilationObject', function test__OLSKInternational
 
 });
 
+describe('_OLSKInternationalCompilationFilePath', function test__OLSKInternationalCompilationFilePath() {
+
+	it('throws error if not string', function() {
+		throws(function() {
+			mainModule._OLSKInternationalCompilationFilePath(null)
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('throws error if not filled', function() {
+		throws(function() {
+			mainModule._OLSKInternationalCompilationFilePath(' ')
+		}, /OLSKErrorInputNotValid/);
+	});
+
+	it('returns string', function () {
+		deepEqual(mainModule._OLSKInternationalCompilationFilePath('alfa'), `alfa/__compiled/${ mainModule.OLSKInternationalDefaultIdentifier() }-compilation.yml`);
+	});
+
+});
+
 describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationalWriteCompilationFile() {
 
 	const _OLSKInternationalWriteCompilationFile = function (params, cwd, languageID) {

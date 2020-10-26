@@ -188,6 +188,15 @@
 			}, {});
 		},
 
+		_OLSKInternationalCompilationFilePath (cwd) {
+			if (typeof cwd !== 'string' || !cwd.trim()) {
+				throw new Error('OLSKErrorInputNotValid');
+			}
+			const _require = require;
+
+			return _require('path').join(cwd, '__compiled', mod.OLSKInternationalDefaultIdentifier() + '-compilation.yml')
+		},
+
 		OLSKInternationalWriteCompilationFile (params, cwd, languageID) {
 			const _require = require;
 
