@@ -183,41 +183,17 @@ describe('OLSKInternationalLocalizedStringCallback', function test_OLSKInternati
 
 });
 
-describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalFileDelegateErrors() {
-
-	const _OLSKInternationalFileDelegateErrors = function (inputData) {
-		return mod.OLSKInternationalFileDelegateErrors(Object.assign({
-		}, inputData));
-	};
-
-	it('throws error if not object', function() {
-		throws(function() {
-			mod.OLSKInternationalFileDelegateErrors(null);
-		}, /OLSKErrorInputNotValid/);
-	});
-
-	it('returns false', function() {
-		deepEqual(_OLSKInternationalFileDelegateErrors(), false);
-	});
-
-});
-
 describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 
-	const __OLSKInternationalPaths = function (params, cwd = Math.random().toString()) {
-		return mod._OLSKInternationalPaths(Object.assign({
-		}, params), cwd);
-	};
-
-	it('throws error if param2 not string', function() {
+	it('throws error if not string', function() {
 		throws(function() {
-			__OLSKInternationalPaths({}, null)
+			mod._OLSKInternationalPaths(null)
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('throws error if param2 not filled', function() {
+	it('throws error if not filled', function() {
 		throws(function() {
-			__OLSKInternationalPaths({}, ' ')
+			mod._OLSKInternationalPaths(' ')
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -231,7 +207,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 			return [];
 		});
 
-		__OLSKInternationalPaths({}, cwd);
+		mod._OLSKInternationalPaths(cwd);
 
 		deepEqual(item, [`**/*${ mod.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
 			cwd,
@@ -246,7 +222,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 			return [item];
 		});
 
-		deepEqual(__OLSKInternationalPaths({}), [item]);
+		deepEqual(mod._OLSKInternationalPaths(Math.random().toString()), [item]);
 	});
 
 	it('filters globSync', function() {
@@ -256,7 +232,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 				'alfa/i18n.en.yml',
 			];
 		});
-		deepEqual(__OLSKInternationalPaths({}), ['alfa/i18n.en.yml']);
+		deepEqual(mod._OLSKInternationalPaths(Math.random().toString()), ['alfa/i18n.en.yml']);
 	});
 
 	afterEach(function () {
@@ -267,14 +243,9 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 
 describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternationalConstructedDictionary() {
 
-	const __OLSKInternationalConstructedDictionary = function (param1, param2) {
-		return mod._OLSKInternationalConstructedDictionary(Object.assign({
-		}, param1), param2);
-	};
-
 	it('throws error if param2 not array', function() {
 		throws(function() {
-			__OLSKInternationalConstructedDictionary({}, null);
+			mod._OLSKInternationalConstructedDictionary(null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -286,7 +257,7 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 			return '{}';
 		});
 
-		__OLSKInternationalConstructedDictionary({}, ['alfa/i18n.en.yml']);
+		mod._OLSKInternationalConstructedDictionary(['alfa/i18n.en.yml']);
 
 		deepEqual(item, ['alfa/i18n.en.yml', 'utf8']);
 	});
@@ -298,7 +269,7 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 			return JSON.stringify({ alfa });
 		});
 
-		deepEqual(__OLSKInternationalConstructedDictionary({}, ['alfa/i18n.en.yml']), {
+		deepEqual(mod._OLSKInternationalConstructedDictionary(['alfa/i18n.en.yml']), {
 			en: {
 				alfa,
 			},
@@ -317,24 +288,18 @@ describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionar
 		return Object.assign(Object.assign({}, mod), {
 			_OLSKInternationalPaths: params._OLSKInternationalPaths || (function () {}),
 			_OLSKInternationalConstructedDictionary: params._OLSKInternationalConstructedDictionary || (function () {}),
-		}).OLSKInternationalDictionary({}, cwd);
+		}).OLSKInternationalDictionary(cwd);
 	};
 
-	it('throws error if param1 not valid', function() {
+	it('throws error if not string', function() {
 		throws(function() {
-			mod.OLSKInternationalDictionary({});
+			mod.OLSKInternationalDictionary(null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('throws error if param2 not string', function() {
+	it('throws error if not filled', function() {
 		throws(function() {
-			mod.OLSKInternationalDictionary({}, null)
-		}, /OLSKErrorInputNotValid/);
-	});
-
-	it('throws error if param2 not filled', function() {
-		throws(function() {
-			mod.OLSKInternationalDictionary({}, ' ')
+			mod.OLSKInternationalDictionary(' ');
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -349,7 +314,7 @@ describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionar
 			}),
 		}, cwd);
 
-		deepEqual(item, [{}, cwd]);
+		deepEqual(item, [cwd]);
 	});
 
 	it('calls _OLSKInternationalConstructedDictionary', function() {
@@ -365,7 +330,7 @@ describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionar
 			}),
 		});
 
-		deepEqual(item, [{}, paths]);
+		deepEqual(item, [paths]);
 	});
 
 	it('returns _OLSKInternationalConstructedDictionary', function() {
@@ -385,25 +350,18 @@ describe('_OLSKInternationalCompilationObject', function test__OLSKInternational
 	const __OLSKInternationalCompilationObject = function (params, cwd, languageID) {
 		return Object.assign(Object.assign({}, mod), {
 			_OLSKInternationalPaths: params._OLSKInternationalPaths || (function () {}),
-		})._OLSKInternationalCompilationObject({
-		}, cwd, languageID);
+		})._OLSKInternationalCompilationObject(cwd, languageID);
 	};
 
-	it('throws error if param1 not valid', function() {
+	it('throws error if not string', function() {
 		throws(function() {
-			mod._OLSKInternationalCompilationObject({});
+			mod._OLSKInternationalCompilationObject(null)
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('throws error if param2 not string', function() {
+	it('throws error if not filled', function() {
 		throws(function() {
-			mod._OLSKInternationalCompilationObject({}, null)
-		}, /OLSKErrorInputNotValid/);
-	});
-
-	it('throws error if param2 not filled', function() {
-		throws(function() {
-			mod._OLSKInternationalCompilationObject({}, ' ')
+			mod._OLSKInternationalCompilationObject(' ')
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -418,8 +376,7 @@ describe('_OLSKInternationalCompilationObject', function test__OLSKInternational
 			}),
 		}, cwd);
 
-		deepEqual(item, [{
-		}, cwd]);
+		deepEqual(item, [cwd]);
 	});
 
 	it('returns object', function() {
@@ -482,27 +439,18 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 	const _OLSKInternationalWriteCompilationFile = function (params, cwd, languageID) {
 		return Object.assign(Object.assign({}, mod), {
 			_OLSKInternationalCompilationObject: params._OLSKInternationalCompilationObject || (function () {}),
-		}).OLSKInternationalWriteCompilationFile({
-		}, cwd, languageID);
+		}).OLSKInternationalWriteCompilationFile(cwd, languageID);
 	};
 
-	it('throws error if param1 not valid', function() {
+	it('throws error if not string', function() {
 		throws(function() {
-			mod.OLSKInternationalWriteCompilationFile({});
+			mod.OLSKInternationalWriteCompilationFile(null)
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('throws error if param2 not string', function() {
+	it('throws error if not filled', function() {
 		throws(function() {
-			mod.OLSKInternationalWriteCompilationFile({
-			}, null)
-		}, /OLSKErrorInputNotValid/);
-	});
-
-	it('throws error if param2 not filled', function() {
-		throws(function() {
-			mod.OLSKInternationalWriteCompilationFile({
-			}, ' ')
+			mod.OLSKInternationalWriteCompilationFile(' ')
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -520,8 +468,7 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 			}),
 		}, cwd, languageID);
 
-		deepEqual(item, [{
-		}, cwd, languageID]);
+		deepEqual(item, [cwd, languageID]);
 	});
 
 	it('calls writeFileSync', function() {
@@ -562,28 +509,15 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 
 describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternationalSpreadCompilationFile() {
 
-	const _OLSKInternationalSpreadCompilationFile = function (cwd) {
-		return mod.OLSKInternationalSpreadCompilationFile({
-		}, cwd);
-	};
-
-	it('throws error if param1 not valid', function() {
+	it('throws error if not string', function() {
 		throws(function() {
-			mod.OLSKInternationalSpreadCompilationFile({});
+			mod.OLSKInternationalSpreadCompilationFile(null)
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('throws error if param2 not string', function() {
+	it('throws error if not filled', function() {
 		throws(function() {
-			mod.OLSKInternationalSpreadCompilationFile({
-			}, null)
-		}, /OLSKErrorInputNotValid/);
-	});
-
-	it('throws error if param2 not filled', function() {
-		throws(function() {
-			mod.OLSKInternationalSpreadCompilationFile({
-			}, ' ')
+			mod.OLSKInternationalSpreadCompilationFile(' ')
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -596,7 +530,7 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 			return '{}';
 		});
 
-		_OLSKInternationalSpreadCompilationFile(cwd);
+		mod.OLSKInternationalSpreadCompilationFile(cwd);
 
 		deepEqual(item, [mod._OLSKInternationalCompilationFilePath(cwd), 'utf8']);
 	});
@@ -619,7 +553,7 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 			item.push(Array.from(arguments));
 		});
 
-		_OLSKInternationalSpreadCompilationFile(Math.random().toString());
+		mod.OLSKInternationalSpreadCompilationFile(Math.random().toString());
 
 		deepEqual(item, Object.keys(compilation).map(function (e) {
 			return [e, safeDump(compilation[e])];
@@ -632,7 +566,7 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 		});
 		require('fs').writeFileSync = (function () {});
 
-		deepEqual(_OLSKInternationalSpreadCompilationFile(Date.now().toString()), undefined);
+		deepEqual(mod.OLSKInternationalSpreadCompilationFile(Date.now().toString()), undefined);
 	});
 
 	afterEach(function () {

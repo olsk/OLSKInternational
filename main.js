@@ -109,19 +109,7 @@
 			};
 		},
 
-		OLSKInternationalFileDelegateErrors (inputData) {
-			if (typeof inputData !== 'object' || inputData === null) {
-				throw new Error('OLSKErrorInputNotValid');
-			}
-
-			return false;
-		},
-
-		_OLSKInternationalPaths (params, cwd) {
-			if (mod.OLSKInternationalFileDelegateErrors(params)) {
-				throw new Error('OLSKErrorInputNotValid');
-			}
-
+		_OLSKInternationalPaths (cwd) {
 			if (typeof cwd !== 'string' || !cwd.trim()) {
 				throw new Error('OLSKErrorInputNotValid');
 			}
@@ -136,18 +124,14 @@
 			});
 		},
 
-		_OLSKInternationalConstructedDictionary (param1, param2) {
-			if (mod.OLSKInternationalFileDelegateErrors(param1)) {
-				throw new Error('OLSKErrorInputNotValid');
-			}
-
-			if (!Array.isArray(param2)) {
+		_OLSKInternationalConstructedDictionary (inputData) {
+			if (!Array.isArray(inputData)) {
 				throw new Error('OLSKErrorInputNotValid');
 			}
 
 			const _require = require;
 
-			return param2.reduce(function (coll, item) {
+			return inputData.reduce(function (coll, item) {
 				const key = mod.OLSKInternationalLanguageID(_require('path').basename(item));
 
 				coll[key] = Object.assign(coll[key] || {}, _require('js-yaml').safeLoad(_require('fs').readFileSync(item, 'utf8')))
@@ -156,14 +140,14 @@
 			}, {});
 		},
 
-		OLSKInternationalDictionary (params, cwd) {
-			return this._OLSKInternationalConstructedDictionary(params, this._OLSKInternationalPaths(params, cwd));
+		OLSKInternationalDictionary (cwd) {
+			return this._OLSKInternationalConstructedDictionary(this._OLSKInternationalPaths(cwd));
 		},
 
-		_OLSKInternationalCompilationObject (params, cwd, languageID) {
+		_OLSKInternationalCompilationObject (cwd, languageID) {
 			const _require = require;
 
-			return this._OLSKInternationalPaths(params, cwd).filter(function (e) {
+			return this._OLSKInternationalPaths(cwd).filter(function (e) {
 				if (!languageID) {
 					return true;
 				}
@@ -185,19 +169,15 @@
 			return _require('path').join(cwd, '__compiled', mod.OLSKInternationalDefaultIdentifier() + '-compilation.yml')
 		},
 
-		OLSKInternationalWriteCompilationFile (params, cwd, languageID) {
+		OLSKInternationalWriteCompilationFile (cwd, languageID) {
 			const _require = require;
 
-			const data = _require('js-yaml').safeDump(this._OLSKInternationalCompilationObject(params, cwd, languageID));
+			const data = _require('js-yaml').safeDump(this._OLSKInternationalCompilationObject(cwd, languageID));
 
 			_require('fs').writeFileSync(mod._OLSKInternationalCompilationFilePath(cwd), data);
 		},
 
-		OLSKInternationalSpreadCompilationFile (params, cwd, languageID) {
-			if (mod.OLSKInternationalFileDelegateErrors(params)) {
-				throw new Error('OLSKErrorInputNotValid');
-			}
-
+		OLSKInternationalSpreadCompilationFile (cwd, languageID) {
 			if (typeof cwd !== 'string' || !cwd.trim()) {
 				throw new Error('OLSKErrorInputNotValid');
 			}
