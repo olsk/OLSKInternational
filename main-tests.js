@@ -1,6 +1,6 @@
 const { throws, deepEqual } = require('assert');
 
-const mainModule = require('./main');
+const mod = require('./main');
 
 const globSync = require('glob').sync;
 const readFileSync = require('fs').readFileSync;
@@ -12,7 +12,7 @@ const OLSKInternationalFileDelegateYAMLDump = JSON.stringify;
 describe('OLSKInternationalDefaultIdentifier', function test_OLSKInternationalDefaultIdentifier() {
 
 	it('returns string', function() {
-		deepEqual(mainModule.OLSKInternationalDefaultIdentifier(), 'i18n');
+		deepEqual(mod.OLSKInternationalDefaultIdentifier(), 'i18n');
 	});
 
 });
@@ -20,24 +20,24 @@ describe('OLSKInternationalDefaultIdentifier', function test_OLSKInternationalDe
 describe('OLSKInternationalIsTranslationFileBasename', function test_OLSKInternationalIsTranslationFileBasename() {
 
 	it('returns false if not string', function() {
-		deepEqual(mainModule.OLSKInternationalIsTranslationFileBasename(null), false);
+		deepEqual(mod.OLSKInternationalIsTranslationFileBasename(null), false);
 	});
 
 	it('returns false if without yaml extension', function() {
-		deepEqual(mainModule.OLSKInternationalIsTranslationFileBasename('i18n.en.abc'), false);
+		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('i18n.en.abc'), false);
 	});
 
 	it('returns false if without OLSKInternationalDefaultIdentifier', function() {
-		deepEqual(mainModule.OLSKInternationalIsTranslationFileBasename('en.yaml'), false);
+		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('en.yaml'), false);
 	});
 
 	it('returns false if without languageID', function() {
-		deepEqual(mainModule.OLSKInternationalIsTranslationFileBasename('i18n.yaml'), false);
+		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('i18n.yaml'), false);
 	});
 
 	it('returns true if valid translationFileBasename', function() {
-		deepEqual(mainModule.OLSKInternationalIsTranslationFileBasename('i18n.en.yaml'), true);
-		deepEqual(mainModule.OLSKInternationalIsTranslationFileBasename('i18n.en.yml'), true);
+		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('i18n.en.yaml'), true);
+		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('i18n.en.yml'), true);
 	});
 
 });
@@ -46,12 +46,12 @@ describe('OLSKInternationalLanguageID', function test_OLSKInternationalLanguageI
 
 	it('throws error if not valid', function() {
 		throws(function() {
-			mainModule.OLSKInternationalLanguageID(null);
+			mod.OLSKInternationalLanguageID(null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns languageID', function() {
-		deepEqual(mainModule.OLSKInternationalLanguageID('i18n.en.yaml'), 'en');
+		deepEqual(mod.OLSKInternationalLanguageID('i18n.en.yaml'), 'en');
 	});
 
 });
@@ -60,16 +60,16 @@ describe('OLSKInternationalSimplifiedLanguageCode', function test_OLSKInternatio
 
 	it('throws error if not string', function() {
 		throws(function() {
-			mainModule.OLSKInternationalSimplifiedLanguageCode(null);
+			mod.OLSKInternationalSimplifiedLanguageCode(null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns input', function() {
-		deepEqual(mainModule.OLSKInternationalSimplifiedLanguageCode(''), '');
+		deepEqual(mod.OLSKInternationalSimplifiedLanguageCode(''), '');
 	});
 
 	it('extracts first hyphenated segment', function() {
-		deepEqual(mainModule.OLSKInternationalSimplifiedLanguageCode('alfa-bravo'), 'alfa');
+		deepEqual(mod.OLSKInternationalSimplifiedLanguageCode('alfa-bravo'), 'alfa');
 	});
 
 });
@@ -78,18 +78,18 @@ describe('OLSKInternationalLocalizedString', function test_OLSKInternationalLoca
 
 	it('throws error if param2 not object', function() {
 		throws(function() {
-			mainModule.OLSKInternationalLocalizedString('alfa', null);
+			mod.OLSKInternationalLocalizedString('alfa', null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns localizedString', function() {
-		deepEqual(mainModule.OLSKInternationalLocalizedString('alfa', {
+		deepEqual(mod.OLSKInternationalLocalizedString('alfa', {
 			alfa: 'bravo',
 		}), 'bravo');
 	});
 
 	it('returns alternate string if translation not available', function() {
-		deepEqual(mainModule.OLSKInternationalLocalizedString('alfa', {
+		deepEqual(mod.OLSKInternationalLocalizedString('alfa', {
 			charlie: 'bravo',
 		}), 'TRANSLATION_MISSING');
 	});
@@ -100,30 +100,30 @@ describe('OLSKInternationalLocalizedStringCallback', function test_OLSKInternati
 
 	it('throws error if param1 not object', function() {
 		throws(function() {
-			mainModule.OLSKInternationalLocalizedStringCallback(null, []);
+			mod.OLSKInternationalLocalizedStringCallback(null, []);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param2 not array', function() {
 		throws(function() {
-			mainModule.OLSKInternationalLocalizedStringCallback({}, null);
+			mod.OLSKInternationalLocalizedStringCallback({}, null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns function', function() {
-		deepEqual(typeof mainModule.OLSKInternationalLocalizedStringCallback({}, []), 'function');
+		deepEqual(typeof mod.OLSKInternationalLocalizedStringCallback({}, []), 'function');
 	});
 
 	context('callback', function () {
 
 		it('throws error if param2 not array', function() {
 			throws(function() {
-				mainModule.OLSKInternationalLocalizedStringCallback({}, [])('alfa', null);
+				mod.OLSKInternationalLocalizedStringCallback({}, [])('alfa', null);
 			}, /OLSKErrorInputNotValid/);
 		});
 
 		it('returns first request locale compound', function() {
-			deepEqual(mainModule.OLSKInternationalLocalizedStringCallback({
+			deepEqual(mod.OLSKInternationalLocalizedStringCallback({
 				en: {
 					alfa: 'bravo',
 				},
@@ -134,7 +134,7 @@ describe('OLSKInternationalLocalizedStringCallback', function test_OLSKInternati
 		});
 
 		it('returns first request locale', function() {
-			deepEqual(mainModule.OLSKInternationalLocalizedStringCallback({
+			deepEqual(mod.OLSKInternationalLocalizedStringCallback({
 				en: {
 					alfa: 'bravo',
 				},
@@ -145,7 +145,7 @@ describe('OLSKInternationalLocalizedStringCallback', function test_OLSKInternati
 		});
 
 		it('returns first fallback locale compound', function() {
-			deepEqual(mainModule.OLSKInternationalLocalizedStringCallback({
+			deepEqual(mod.OLSKInternationalLocalizedStringCallback({
 				en: {
 					alfa: 'bravo',
 				},
@@ -156,7 +156,7 @@ describe('OLSKInternationalLocalizedStringCallback', function test_OLSKInternati
 		});
 
 		it('returns first fallback locale', function() {
-			deepEqual(mainModule.OLSKInternationalLocalizedStringCallback({
+			deepEqual(mod.OLSKInternationalLocalizedStringCallback({
 				en: {
 					alfa: 'bravo',
 				},
@@ -167,7 +167,7 @@ describe('OLSKInternationalLocalizedStringCallback', function test_OLSKInternati
 		});
 
 		it('returns first locale', function() {
-			deepEqual(mainModule.OLSKInternationalLocalizedStringCallback({
+			deepEqual(mod.OLSKInternationalLocalizedStringCallback({
 				en: {
 					alfa: 'bravo',
 				},
@@ -178,7 +178,7 @@ describe('OLSKInternationalLocalizedStringCallback', function test_OLSKInternati
 		});
 
 		it('returns missing', function() {
-			deepEqual(mainModule.OLSKInternationalLocalizedStringCallback({}, [])('alfa', []), 'TRANSLATION_MISSING');
+			deepEqual(mod.OLSKInternationalLocalizedStringCallback({}, [])('alfa', []), 'TRANSLATION_MISSING');
 		});
 	
 	});
@@ -188,7 +188,7 @@ describe('OLSKInternationalLocalizedStringCallback', function test_OLSKInternati
 describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalFileDelegateErrors() {
 
 	const _OLSKInternationalFileDelegateErrors = function (inputData) {
-		return mainModule.OLSKInternationalFileDelegateErrors(Object.assign({
+		return mod.OLSKInternationalFileDelegateErrors(Object.assign({
 			OLSKInternationalFileDelegateGlobSync: (function () {}),
 			OLSKInternationalFileDelegateYAMLRead,
 		}, inputData));
@@ -196,7 +196,7 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 
 	it('throws error if not object', function() {
 		throws(function() {
-			mainModule.OLSKInternationalFileDelegateErrors(null);
+			mod.OLSKInternationalFileDelegateErrors(null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -237,7 +237,7 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 
 	const __OLSKInternationalPaths = function (params, cwd = Math.random().toString()) {
-		return mainModule._OLSKInternationalPaths(Object.assign({
+		return mod._OLSKInternationalPaths(Object.assign({
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				return [];
 			}),
@@ -247,7 +247,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 
 	it('throws error if param1 not valid', function() {
 		throws(function() {
-			mainModule._OLSKInternationalPaths({}, Math.random().toString());
+			mod._OLSKInternationalPaths({}, Math.random().toString());
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -274,7 +274,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 			}),
 		}, cwd);
 
-		deepEqual(item, [`**/*${ mainModule.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
+		deepEqual(item, [`**/*${ mod.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
 			cwd,
 			realpath: true,
 		}]);
@@ -306,7 +306,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternationalConstructedDictionary() {
 
 	const __OLSKInternationalConstructedDictionary = function (param1, param2) {
-		return mainModule._OLSKInternationalConstructedDictionary(Object.assign({
+		return mod._OLSKInternationalConstructedDictionary(Object.assign({
 			OLSKInternationalFileDelegateGlobSync: (function () {
 				return [];
 			}),
@@ -316,7 +316,7 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 
 	it('throws error if param1 not valid', function() {
 		throws(function() {
-			mainModule._OLSKInternationalConstructedDictionary({}, []);
+			mod._OLSKInternationalConstructedDictionary({}, []);
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -362,7 +362,7 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionary() {
 
 	const _OLSKInternationalDictionary = function (params, cwd) {
-		return Object.assign(Object.assign({}, mainModule), {
+		return Object.assign(Object.assign({}, mod), {
 			_OLSKInternationalPaths: params._OLSKInternationalPaths || (function () {}),
 			_OLSKInternationalConstructedDictionary: params._OLSKInternationalConstructedDictionary || (function () {}),
 		}).OLSKInternationalDictionary({}, cwd);
@@ -370,19 +370,19 @@ describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionar
 
 	it('throws error if param1 not valid', function() {
 		throws(function() {
-			mainModule.OLSKInternationalDictionary({});
+			mod.OLSKInternationalDictionary({});
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param2 not string', function() {
 		throws(function() {
-			mainModule.OLSKInternationalDictionary({}, null)
+			mod.OLSKInternationalDictionary({}, null)
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param2 not filled', function() {
 		throws(function() {
-			mainModule.OLSKInternationalDictionary({}, ' ')
+			mod.OLSKInternationalDictionary({}, ' ')
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -431,7 +431,7 @@ describe('OLSKInternationalDictionary', function test_OLSKInternationalDictionar
 describe('_OLSKInternationalCompilationObject', function test__OLSKInternationalCompilationObject() {
 
 	const __OLSKInternationalCompilationObject = function (params, cwd, languageID) {
-		return Object.assign(Object.assign({}, mainModule), {
+		return Object.assign(Object.assign({}, mod), {
 			_OLSKInternationalPaths: params._OLSKInternationalPaths || (function () {}),
 		})._OLSKInternationalCompilationObject({
 			OLSKInternationalFileDelegateYAMLRead,
@@ -440,19 +440,19 @@ describe('_OLSKInternationalCompilationObject', function test__OLSKInternational
 
 	it('throws error if param1 not valid', function() {
 		throws(function() {
-			mainModule._OLSKInternationalCompilationObject({});
+			mod._OLSKInternationalCompilationObject({});
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param2 not string', function() {
 		throws(function() {
-			mainModule._OLSKInternationalCompilationObject({}, null)
+			mod._OLSKInternationalCompilationObject({}, null)
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param2 not filled', function() {
 		throws(function() {
-			mainModule._OLSKInternationalCompilationObject({}, ' ')
+			mod._OLSKInternationalCompilationObject({}, ' ')
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -511,18 +511,18 @@ describe('_OLSKInternationalCompilationFilePath', function test__OLSKInternation
 
 	it('throws error if not string', function() {
 		throws(function() {
-			mainModule._OLSKInternationalCompilationFilePath(null)
+			mod._OLSKInternationalCompilationFilePath(null)
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if not filled', function() {
 		throws(function() {
-			mainModule._OLSKInternationalCompilationFilePath(' ')
+			mod._OLSKInternationalCompilationFilePath(' ')
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('returns string', function () {
-		deepEqual(mainModule._OLSKInternationalCompilationFilePath('alfa'), `alfa/__compiled/${ mainModule.OLSKInternationalDefaultIdentifier() }-compilation.yml`);
+		deepEqual(mod._OLSKInternationalCompilationFilePath('alfa'), `alfa/__compiled/${ mod.OLSKInternationalDefaultIdentifier() }-compilation.yml`);
 	});
 
 });
@@ -530,7 +530,7 @@ describe('_OLSKInternationalCompilationFilePath', function test__OLSKInternation
 describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationalWriteCompilationFile() {
 
 	const _OLSKInternationalWriteCompilationFile = function (params, cwd, languageID) {
-		return Object.assign(Object.assign({}, mainModule), {
+		return Object.assign(Object.assign({}, mod), {
 			_OLSKInternationalCompilationObject: params._OLSKInternationalCompilationObject || (function () {}),
 		}).OLSKInternationalWriteCompilationFile({
 			OLSKInternationalFileDelegateYAMLRead,
@@ -540,13 +540,13 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 
 	it('throws error if param1 not valid', function() {
 		throws(function() {
-			mainModule.OLSKInternationalWriteCompilationFile({});
+			mod.OLSKInternationalWriteCompilationFile({});
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param1 with no OLSKInternationalFileDelegateYAMLDump', function() {
 		throws(function() {
-			mainModule.OLSKInternationalWriteCompilationFile({
+			mod.OLSKInternationalWriteCompilationFile({
 				OLSKInternationalFileDelegateYAMLRead,
 				OLSKInternationalFileDelegateYAMLDump: null,
 			}, Date.now().toString());
@@ -555,7 +555,7 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 
 	it('throws error if param2 not string', function() {
 		throws(function() {
-			mainModule.OLSKInternationalWriteCompilationFile({
+			mod.OLSKInternationalWriteCompilationFile({
 				OLSKInternationalFileDelegateYAMLRead,
 				OLSKInternationalFileDelegateYAMLDump,
 			}, null)
@@ -564,7 +564,7 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 
 	it('throws error if param2 not filled', function() {
 		throws(function() {
-			mainModule.OLSKInternationalWriteCompilationFile({
+			mod.OLSKInternationalWriteCompilationFile({
 				OLSKInternationalFileDelegateYAMLRead,
 				OLSKInternationalFileDelegateYAMLDump,
 			}, ' ')
@@ -608,7 +608,7 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 			}),
 		}, cwd);
 
-		deepEqual(item, [mainModule._OLSKInternationalCompilationFilePath(cwd), OLSKInternationalFileDelegateYAMLDump(_OLSKInternationalCompilationObject)]);
+		deepEqual(item, [mod._OLSKInternationalCompilationFilePath(cwd), OLSKInternationalFileDelegateYAMLDump(_OLSKInternationalCompilationObject)]);
 	});
 
 	it('returns undefined', function() {
@@ -630,7 +630,7 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternationalSpreadCompilationFile() {
 
 	const _OLSKInternationalSpreadCompilationFile = function (cwd) {
-		return mainModule.OLSKInternationalSpreadCompilationFile({
+		return mod.OLSKInternationalSpreadCompilationFile({
 			OLSKInternationalFileDelegateGlobSync: (function () {}),
 			OLSKInternationalFileDelegateYAMLRead,
 			OLSKInternationalFileDelegateYAMLDump,
@@ -639,13 +639,13 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 
 	it('throws error if param1 not valid', function() {
 		throws(function() {
-			mainModule.OLSKInternationalSpreadCompilationFile({});
+			mod.OLSKInternationalSpreadCompilationFile({});
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param1 with no OLSKInternationalFileDelegateYAMLDump', function() {
 		throws(function() {
-			mainModule.OLSKInternationalSpreadCompilationFile({
+			mod.OLSKInternationalSpreadCompilationFile({
 				OLSKInternationalFileDelegateYAMLRead,
 				OLSKInternationalFileDelegateYAMLDump: null,
 			}, Date.now().toString());
@@ -654,7 +654,7 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 
 	it('throws error if param2 not string', function() {
 		throws(function() {
-			mainModule.OLSKInternationalSpreadCompilationFile({
+			mod.OLSKInternationalSpreadCompilationFile({
 				OLSKInternationalFileDelegateYAMLRead,
 				OLSKInternationalFileDelegateYAMLDump,
 			}, null)
@@ -663,7 +663,7 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 
 	it('throws error if param2 not filled', function() {
 		throws(function() {
-			mainModule.OLSKInternationalSpreadCompilationFile({
+			mod.OLSKInternationalSpreadCompilationFile({
 				OLSKInternationalFileDelegateYAMLRead,
 				OLSKInternationalFileDelegateYAMLDump,
 			}, ' ')
@@ -681,7 +681,7 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 
 		_OLSKInternationalSpreadCompilationFile(cwd);
 
-		deepEqual(item, [mainModule._OLSKInternationalCompilationFilePath(cwd), 'utf8']);
+		deepEqual(item, [mod._OLSKInternationalCompilationFilePath(cwd), 'utf8']);
 	});
 
 	it('calls writeFileSync', function() {
@@ -729,25 +729,25 @@ describe('OLSKInternationalAddControllerLanguageCode', function test_OLSKInterna
 
 	it('throws error if param1 not string', function() {
 		throws(function() {
-			mainModule.OLSKInternationalAddControllerLanguageCode(null, Math.random().toString());
+			mod.OLSKInternationalAddControllerLanguageCode(null, Math.random().toString());
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param1 not filled', function() {
 		throws(function() {
-			mainModule.OLSKInternationalAddControllerLanguageCode(' ', Math.random().toString());
+			mod.OLSKInternationalAddControllerLanguageCode(' ', Math.random().toString());
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param2 not string', function() {
 		throws(function() {
-			mainModule.OLSKInternationalAddControllerLanguageCode(Math.random().toString(), null);
+			mod.OLSKInternationalAddControllerLanguageCode(Math.random().toString(), null);
 		}, /OLSKErrorInputNotValid/);
 	});
 
 	it('throws error if param2 not filled', function() {
 		throws(function() {
-			mainModule.OLSKInternationalAddControllerLanguageCode(Math.random().toString(), ' ');
+			mod.OLSKInternationalAddControllerLanguageCode(Math.random().toString(), ' ');
 		}, /OLSKErrorInputNotValid/);
 	});
 
@@ -761,7 +761,7 @@ describe('OLSKInternationalAddControllerLanguageCode', function test_OLSKInterna
 			return [];
 		});
 
-		mainModule.OLSKInternationalAddControllerLanguageCode(cwd, Math.random().toString());
+		mod.OLSKInternationalAddControllerLanguageCode(cwd, Math.random().toString());
 
 		deepEqual(item, ['controller.js', {
 			cwd,
