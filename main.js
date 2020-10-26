@@ -120,6 +120,8 @@
 				cwd,
 				realpath: true,
 			}).filter(function (e) {
+				return !e.match(/node_modules|__external/);
+			}).filter(function (e) {
 				return mod.OLSKInternationalIsTranslationFileBasename(_require('path').basename(e));
 			});
 		},

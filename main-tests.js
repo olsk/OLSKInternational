@@ -230,6 +230,8 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 			return [
 				Math.random().toString(),
 				'alfa/i18n.en.yml',
+				'__external/i18n.en.yml',
+				'node_modules/alfa/i18n.en.yml',
 			];
 		});
 		deepEqual(mod._OLSKInternationalPaths(Math.random().toString()), ['alfa/i18n.en.yml']);
