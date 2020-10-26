@@ -7,20 +7,14 @@ const mod = {
 	_ValueDirectory: process.cwd(),
 	_ValueLanguageID: undefined,
 
-	// DATA
-
-	_DataFileDelegate: {
-		OLSKInternationalFileDelegateYAMLDump: require('js-yaml').safeDump,
-	},
-
 	// CONTROL
 
 	ControlCompile(args) {
-		require('./main.js').OLSKInternationalWriteCompilationFile(mod._DataFileDelegate, mod._ValueDirectory, mod._ValueLanguageID);
+		require('./main.js').OLSKInternationalWriteCompilationFile(mod._ValueDirectory, mod._ValueLanguageID);
 	},
 
 	ControlSpread(args) {
-		require('./main.js').OLSKInternationalSpreadCompilationFile(mod._DataFileDelegate, mod._ValueDirectory);
+		require('./main.js').OLSKInternationalSpreadCompilationFile(mod._ValueDirectory);
 	},
 
 	ControlAdd(args) {

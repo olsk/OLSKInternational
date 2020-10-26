@@ -114,10 +114,6 @@
 				throw new Error('OLSKErrorInputNotValid');
 			}
 
-			if (inputData.OLSKInternationalFileDelegateYAMLDump && typeof inputData.OLSKInternationalFileDelegateYAMLDump !== 'function') {
-				return true;
-			}
-
 			return false;
 		},
 
@@ -192,21 +188,13 @@
 		OLSKInternationalWriteCompilationFile (params, cwd, languageID) {
 			const _require = require;
 
-			const data = params.OLSKInternationalFileDelegateYAMLDump(this._OLSKInternationalCompilationObject(params, cwd, languageID));
-
-			if (!params.OLSKInternationalFileDelegateYAMLDump) {
-				throw new Error('OLSKErrorInputNotValid');
-			}
+			const data = _require('js-yaml').safeDump(this._OLSKInternationalCompilationObject(params, cwd, languageID));
 
 			_require('fs').writeFileSync(mod._OLSKInternationalCompilationFilePath(cwd), data);
 		},
 
 		OLSKInternationalSpreadCompilationFile (params, cwd, languageID) {
 			if (mod.OLSKInternationalFileDelegateErrors(params)) {
-				throw new Error('OLSKErrorInputNotValid');
-			}
-
-			if (!params.OLSKInternationalFileDelegateYAMLDump) {
 				throw new Error('OLSKErrorInputNotValid');
 			}
 
@@ -219,7 +207,7 @@
 			const compilation = _require('js-yaml').safeLoad(_require('fs').readFileSync(mod._OLSKInternationalCompilationFilePath(cwd), 'utf8'));
 
 			Object.keys(compilation).map(function (e) {
-				return _require('fs').writeFileSync(e, params.OLSKInternationalFileDelegateYAMLDump(compilation[e]));
+				return _require('fs').writeFileSync(e, _require('js-yaml').safeDump(compilation[e]));
 			});
 		},
 

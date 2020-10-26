@@ -5,8 +5,7 @@ const mod = require('./main');
 const globSync = require('glob').sync;
 const readFileSync = require('fs').readFileSync;
 const writeFileSync = require('fs').writeFileSync;
-
-const OLSKInternationalFileDelegateYAMLDump = JSON.stringify;
+const safeDump = require('js-yaml').safeDump; // #mysterious disappearing module
 
 describe('OLSKInternationalDefaultIdentifier', function test_OLSKInternationalDefaultIdentifier() {
 
@@ -199,22 +198,6 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 
 	it('returns false', function() {
 		deepEqual(_OLSKInternationalFileDelegateErrors(), false);
-	});
-
-	context('OLSKInternationalFileDelegateYAMLDump', function () {
-		
-		it('returns true if OLSKInternationalFileDelegateYAMLDump not function', function() {
-			deepEqual(_OLSKInternationalFileDelegateErrors({
-				OLSKInternationalFileDelegateYAMLDump: 'alfa',
-			}), true);
-		});
-
-		it('returns false', function() {
-			deepEqual(_OLSKInternationalFileDelegateErrors({
-				OLSKInternationalFileDelegateYAMLDump,
-			}), false);
-		});
-	
 	});
 
 });
@@ -500,7 +483,6 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 		return Object.assign(Object.assign({}, mod), {
 			_OLSKInternationalCompilationObject: params._OLSKInternationalCompilationObject || (function () {}),
 		}).OLSKInternationalWriteCompilationFile({
-			OLSKInternationalFileDelegateYAMLDump,
 		}, cwd, languageID);
 	};
 
@@ -510,18 +492,9 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it.skip('throws error if param1 with no OLSKInternationalFileDelegateYAMLDump', function() {
-		throws(function() {
-			mod.OLSKInternationalWriteCompilationFile({
-				OLSKInternationalFileDelegateYAMLDump: null,
-			}, Date.now().toString());
-		}, /OLSKErrorInputNotValid/);
-	});
-
 	it('throws error if param2 not string', function() {
 		throws(function() {
 			mod.OLSKInternationalWriteCompilationFile({
-				OLSKInternationalFileDelegateYAMLDump,
 			}, null)
 		}, /OLSKErrorInputNotValid/);
 	});
@@ -529,7 +502,6 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 	it('throws error if param2 not filled', function() {
 		throws(function() {
 			mod.OLSKInternationalWriteCompilationFile({
-				OLSKInternationalFileDelegateYAMLDump,
 			}, ' ')
 		}, /OLSKErrorInputNotValid/);
 	});
@@ -549,7 +521,6 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 		}, cwd, languageID);
 
 		deepEqual(item, [{
-			OLSKInternationalFileDelegateYAMLDump,
 		}, cwd, languageID]);
 	});
 
@@ -570,7 +541,7 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 			}),
 		}, cwd);
 
-		deepEqual(item, [mod._OLSKInternationalCompilationFilePath(cwd), OLSKInternationalFileDelegateYAMLDump(_OLSKInternationalCompilationObject)]);
+		deepEqual(item, [mod._OLSKInternationalCompilationFilePath(cwd), safeDump(_OLSKInternationalCompilationObject)]);
 	});
 
 	it('returns undefined', function() {
@@ -593,7 +564,6 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 
 	const _OLSKInternationalSpreadCompilationFile = function (cwd) {
 		return mod.OLSKInternationalSpreadCompilationFile({
-			OLSKInternationalFileDelegateYAMLDump,
 		}, cwd);
 	};
 
@@ -603,18 +573,9 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('throws error if param1 with no OLSKInternationalFileDelegateYAMLDump', function() {
-		throws(function() {
-			mod.OLSKInternationalSpreadCompilationFile({
-				OLSKInternationalFileDelegateYAMLDump: null,
-			}, Date.now().toString());
-		}, /OLSKErrorInputNotValid/);
-	});
-
 	it('throws error if param2 not string', function() {
 		throws(function() {
 			mod.OLSKInternationalSpreadCompilationFile({
-				OLSKInternationalFileDelegateYAMLDump,
 			}, null)
 		}, /OLSKErrorInputNotValid/);
 	});
@@ -622,7 +583,6 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 	it('throws error if param2 not filled', function() {
 		throws(function() {
 			mod.OLSKInternationalSpreadCompilationFile({
-				OLSKInternationalFileDelegateYAMLDump,
 			}, ' ')
 		}, /OLSKErrorInputNotValid/);
 	});
@@ -653,7 +613,7 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 		const item = [];
 
 		require('fs').readFileSync = (function () {
-			return OLSKInternationalFileDelegateYAMLDump(compilation);
+			return safeDump(compilation);
 		});
 		require('fs').writeFileSync = (function () {
 			item.push(Array.from(arguments));
@@ -662,7 +622,7 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 		_OLSKInternationalSpreadCompilationFile(Math.random().toString());
 
 		deepEqual(item, Object.keys(compilation).map(function (e) {
-			return [e, OLSKInternationalFileDelegateYAMLDump(compilation[e])];
+			return [e, safeDump(compilation[e])];
 		}));
 	});
 
