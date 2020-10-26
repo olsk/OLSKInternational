@@ -608,7 +608,7 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 			}),
 		}, cwd);
 
-		deepEqual(item, [require('path').join(cwd, mainModule.OLSKInternationalDefaultIdentifier() + '-compilation.yml'), OLSKInternationalFileDelegateYAMLDump(_OLSKInternationalCompilationObject)]);
+		deepEqual(item, [mainModule._OLSKInternationalCompilationFilePath(cwd), OLSKInternationalFileDelegateYAMLDump(_OLSKInternationalCompilationObject)]);
 	});
 
 	it('returns undefined', function() {
@@ -681,7 +681,7 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 
 		_OLSKInternationalSpreadCompilationFile(cwd);
 
-		deepEqual(item, [require('path').join(cwd, mainModule.OLSKInternationalDefaultIdentifier() + '-compilation.yml'), 'utf8']);
+		deepEqual(item, [mainModule._OLSKInternationalCompilationFilePath(cwd), 'utf8']);
 	});
 
 	it('calls writeFileSync', function() {

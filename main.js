@@ -206,7 +206,7 @@
 				throw new Error('OLSKErrorInputNotValid');
 			}
 
-			_require('fs').writeFileSync(_require('path').join(cwd, mod.OLSKInternationalDefaultIdentifier() + '-compilation.yml'), data);
+			_require('fs').writeFileSync(mod._OLSKInternationalCompilationFilePath(cwd), data);
 		},
 
 		OLSKInternationalSpreadCompilationFile (params, cwd, languageID) {
@@ -224,7 +224,7 @@
 
 			const _require = require;
 
-			const compilation = params.OLSKInternationalFileDelegateYAMLRead(_require('fs').readFileSync(_require('path').join(cwd, mod.OLSKInternationalDefaultIdentifier() + '-compilation.yml'), 'utf8'));
+			const compilation = params.OLSKInternationalFileDelegateYAMLRead(_require('fs').readFileSync(mod._OLSKInternationalCompilationFilePath(cwd), 'utf8'));
 
 			Object.keys(compilation).map(function (e) {
 				return _require('fs').writeFileSync(e, params.OLSKInternationalFileDelegateYAMLDump(compilation[e]));
