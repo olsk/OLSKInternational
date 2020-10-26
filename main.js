@@ -153,7 +153,7 @@
 		_OLSKInternationalCompilationObject (cwd, languageID) {
 			const _require = require;
 
-			return this._OLSKInternationalPaths(cwd).filter(function (e) {
+			return this._OLSKInternationalPaths(cwd, /node_modules|__external/).filter(function (e) {
 				if (!languageID) {
 					return true;
 				}

@@ -381,7 +381,7 @@ describe('_OLSKInternationalCompilationObject', function test__OLSKInternational
 			}),
 		}, cwd);
 
-		deepEqual(item, [cwd]);
+		deepEqual(item, [cwd, /node_modules|__external/]);
 	});
 
 	it('returns object', function() {
