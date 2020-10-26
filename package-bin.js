@@ -15,6 +15,7 @@ const mod = {
 
 	ControlSpread(args) {
 		require('./main.js').OLSKInternationalSpreadCompilationFile(mod._ValueDirectory);
+		console.log('Spread ', mod._ValueDirectory);
 	},
 
 	ControlAdd(args) {
