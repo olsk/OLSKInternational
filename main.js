@@ -109,7 +109,7 @@
 			};
 		},
 
-		_OLSKInternationalPaths (cwd) {
+		_OLSKInternationalPaths (cwd, filter) {
 			if (typeof cwd !== 'string' || !cwd.trim()) {
 				throw new Error('OLSKErrorInputNotValid');
 			}
@@ -120,7 +120,11 @@
 				cwd,
 				realpath: true,
 			}).filter(function (e) {
-				return !e.match(/node_modules|__external/);
+				if (!filter) {
+					return true;
+				}
+
+				return !e.match(filter);
 			}).filter(function (e) {
 				return mod.OLSKInternationalIsTranslationFileBasename(_require('path').basename(e));
 			});

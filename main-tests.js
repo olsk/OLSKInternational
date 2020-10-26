@@ -225,16 +225,19 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 		deepEqual(mod._OLSKInternationalPaths(Math.random().toString()), [item]);
 	});
 
-	it('filters globSync', function() {
+	it('filters globSync if param2', function() {
 		require('glob').sync = (function () {
 			return [
 				Math.random().toString(),
 				'alfa/i18n.en.yml',
-				'__external/i18n.en.yml',
+				'__external/alfa/i18n.en.yml',
 				'node_modules/alfa/i18n.en.yml',
 			];
 		});
-		deepEqual(mod._OLSKInternationalPaths(Math.random().toString()), ['alfa/i18n.en.yml']);
+		deepEqual(mod._OLSKInternationalPaths(Math.random().toString(), /node_modules/), [
+			'alfa/i18n.en.yml',
+			'__external/alfa/i18n.en.yml',
+			]);
 	});
 
 	afterEach(function () {
