@@ -189,7 +189,6 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 
 	const _OLSKInternationalFileDelegateErrors = function (inputData) {
 		return mod.OLSKInternationalFileDelegateErrors(Object.assign({
-			OLSKInternationalFileDelegateGlobSync: (function () {}),
 			OLSKInternationalFileDelegateYAMLRead,
 		}, inputData));
 	};
@@ -198,12 +197,6 @@ describe('OLSKInternationalFileDelegateErrors', function test_OLSKInternationalF
 		throws(function() {
 			mod.OLSKInternationalFileDelegateErrors(null);
 		}, /OLSKErrorInputNotValid/);
-	});
-
-	it('returns true if OLSKInternationalFileDelegateGlobSync not function', function() {
-		deepEqual(_OLSKInternationalFileDelegateErrors({
-			OLSKInternationalFileDelegateGlobSync: null,
-		}), true);
 	});
 
 	it('returns true if OLSKInternationalFileDelegateYAMLRead not function', function() {
@@ -238,9 +231,6 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 
 	const __OLSKInternationalPaths = function (params, cwd = Math.random().toString()) {
 		return mod._OLSKInternationalPaths(Object.assign({
-			OLSKInternationalFileDelegateGlobSync: (function () {
-				return [];
-			}),
 			OLSKInternationalFileDelegateYAMLRead,
 		}, params), cwd);
 	};
@@ -263,16 +253,17 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('calls OLSKInternationalFileDelegateGlobSync', function() {
+	it('calls globSync', function() {
 		const cwd = Math.random().toString();
 		const item = [];
 
-		__OLSKInternationalPaths({
-			OLSKInternationalFileDelegateGlobSync: (function () {
-				item.push(...arguments);
-				return [];
-			}),
-		}, cwd);
+		require('glob').sync = (function () {
+			item.push(...arguments);
+
+			return [];
+		});
+
+		__OLSKInternationalPaths({}, cwd);
 
 		deepEqual(item, [`**/*${ mod.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
 			cwd,
@@ -280,25 +271,28 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 		}]);
 	});
 
-	it('returns OLSKInternationalFileDelegateGlobSync', function() {
+	it('returns globSync', function() {
 		const item = Date.now().toString() + '/i18n.en.yml';
 
-		deepEqual(__OLSKInternationalPaths({
-			OLSKInternationalFileDelegateGlobSync: (function () {
-				return [item];
-			})
-		}), [item]);
+		require('glob').sync = (function () {
+			return [item];
+		});
+
+		deepEqual(__OLSKInternationalPaths({}), [item]);
 	});
 
-	it('filters OLSKInternationalFileDelegateGlobSync', function() {
-		deepEqual(__OLSKInternationalPaths({
-			OLSKInternationalFileDelegateGlobSync: (function () {
-				return [
-					Math.random().toString(),
-					'alfa/i18n.en.yml',
-				];
-			}),
-		}), ['alfa/i18n.en.yml']);
+	it('filters globSync', function() {
+		require('glob').sync = (function () {
+			return [
+				Math.random().toString(),
+				'alfa/i18n.en.yml',
+			];
+		});
+		deepEqual(__OLSKInternationalPaths({}), ['alfa/i18n.en.yml']);
+	});
+
+	afterEach(function () {
+		require('glob').sync = globSync;
 	});
 
 });
@@ -307,9 +301,6 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 
 	const __OLSKInternationalConstructedDictionary = function (param1, param2) {
 		return mod._OLSKInternationalConstructedDictionary(Object.assign({
-			OLSKInternationalFileDelegateGlobSync: (function () {
-				return [];
-			}),
 			OLSKInternationalFileDelegateYAMLRead,
 		}, param1), param2);
 	};
@@ -544,7 +535,7 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 		}, /OLSKErrorInputNotValid/);
 	});
 
-	it('throws error if param1 with no OLSKInternationalFileDelegateYAMLDump', function() {
+	it.skip('throws error if param1 with no OLSKInternationalFileDelegateYAMLDump', function() {
 		throws(function() {
 			mod.OLSKInternationalWriteCompilationFile({
 				OLSKInternationalFileDelegateYAMLRead,
@@ -631,7 +622,6 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 
 	const _OLSKInternationalSpreadCompilationFile = function (cwd) {
 		return mod.OLSKInternationalSpreadCompilationFile({
-			OLSKInternationalFileDelegateGlobSync: (function () {}),
 			OLSKInternationalFileDelegateYAMLRead,
 			OLSKInternationalFileDelegateYAMLDump,
 		}, cwd);

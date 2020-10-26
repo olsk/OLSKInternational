@@ -114,10 +114,6 @@
 				throw new Error('OLSKErrorInputNotValid');
 			}
 
-			if (typeof inputData.OLSKInternationalFileDelegateGlobSync !== 'function') {
-				return true;
-			}
-
 			if (typeof inputData.OLSKInternationalFileDelegateYAMLRead !== 'function') {
 				return true;
 			}
@@ -140,7 +136,7 @@
 
 			const _require = require;
 
-			return params.OLSKInternationalFileDelegateGlobSync(`**/*${ mod.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
+			return _require('glob').sync(`**/*${ mod.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
 				cwd,
 				realpath: true,
 			}).filter(function (e) {
