@@ -447,6 +447,10 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 		}).OLSKInternationalWriteCompilationFile(cwd, languageID);
 	};
 
+	beforeEach(function () {
+		require('fs').writeFileSync = (function () {});
+	});
+
 	it('throws error if not string', function() {
 		throws(function() {
 			mod.OLSKInternationalWriteCompilationFile(null)
@@ -464,12 +468,10 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 		const languageID = Math.random().toString();
 		const item = [];
 
-		require('fs').writeFileSync = (function () {});
-
 		_OLSKInternationalWriteCompilationFile({
 			_OLSKInternationalCompilationObject: (function () {
 				item.push(...arguments);
-				return [];
+				return {};
 			}),
 		}, cwd, languageID);
 
@@ -497,7 +499,6 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 	});
 
 	it('returns undefined', function() {
-		require('fs').writeFileSync = (function () {});
 
 		deepEqual(_OLSKInternationalWriteCompilationFile({
 			_OLSKInternationalCompilationObject: (function () {
