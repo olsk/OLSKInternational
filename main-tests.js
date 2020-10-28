@@ -5,6 +5,8 @@ const mod = require('./main');
 const globSync = require('glob').sync;
 const readFileSync = require('fs').readFileSync;
 const writeFileSync = require('fs').writeFileSync;
+const existsSync = require('fs').existsSync;
+const mkdirSync = require('fs').mkdirSync;
 const safeDump = require('js-yaml').safeDump; // #mysterious disappearing module
 
 describe('OLSKInternationalDefaultIdentifier', function test_OLSKInternationalDefaultIdentifier() {
@@ -449,6 +451,8 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 
 	beforeEach(function () {
 		require('fs').writeFileSync = (function () {});
+		require('fs').existsSync = (function () { return true; });
+		require('fs').mkdirSync = (function () {});
 	});
 
 	it('throws error if not string', function() {
@@ -498,8 +502,28 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 		deepEqual(item, [mod._OLSKInternationalCompilationFilePath(cwd), safeDump(_OLSKInternationalCompilationObject)]);
 	});
 
-	it('returns undefined', function() {
+	it('calls mkdirSync if !existsSync', function() {
+		const cwd = Date.now().toString();
+		const item = [];
 
+		require('fs').existsSync = (function () {
+			return false;
+		});
+
+		require('fs').mkdirSync = (function () {
+			item.push(...arguments);
+		});
+
+		_OLSKInternationalWriteCompilationFile({
+			_OLSKInternationalCompilationObject: (function () {
+				return {};
+			}),
+		}, cwd);
+
+		deepEqual(item, [require('path').dirname(mod._OLSKInternationalCompilationFilePath(cwd))]);
+	});
+
+	it('returns undefined', function() {
 		deepEqual(_OLSKInternationalWriteCompilationFile({
 			_OLSKInternationalCompilationObject: (function () {
 				return {};
@@ -508,6 +532,8 @@ describe('OLSKInternationalWriteCompilationFile', function test_OLSKInternationa
 	});
 
 	afterEach(function () {
+		require('fs').existsSync = existsSync;
+		require('fs').mkdirSync = mkdirSync;
 		require('fs').writeFileSync = writeFileSync;
 	});
 

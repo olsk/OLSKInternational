@@ -180,6 +180,12 @@
 
 			const data = _require('js-yaml').safeDump(this._OLSKInternationalCompilationObject(cwd, languageID));
 
+			const outputDirectory = _require('path').dirname(mod._OLSKInternationalCompilationFilePath(cwd));
+
+			if (!_require('fs').existsSync(outputDirectory)){
+				_require('fs').mkdirSync(outputDirectory);
+			}
+
 			_require('fs').writeFileSync(mod._OLSKInternationalCompilationFilePath(cwd), data);
 		},
 
