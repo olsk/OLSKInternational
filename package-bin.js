@@ -22,6 +22,10 @@ const mod = {
 		require('./main.js').OLSKInternationalAddControllerLanguageCode(mod._ValueDirectory, args[3]);
 	},
 
+	ControlPrintCompilationFilePath(args) {
+		console.log(require('./main.js')._OLSKInternationalCompilationFilePath(require('path').resolve(mod._ValueDirectory)));
+	},
+
 	// SETUP
 
 	SetupEverything () {
@@ -57,6 +61,10 @@ const mod = {
 
 		if (process.argv[1].endsWith('olsk-i18n-add')) {
 			return mod.ControlAdd(process.argv);
+		}
+
+		if (process.argv[1].endsWith('_olsk-i18n-compile-file-path')) {
+			return mod.ControlPrintCompilationFilePath(process.argv);
 		}
 	},
 

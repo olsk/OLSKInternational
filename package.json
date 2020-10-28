@@ -8,6 +8,7 @@
   "bin": {
     "olsk-i18n-compile": "./package-bin.js",
     "olsk-i18n-spread": "./package-bin.js",
-    "olsk-i18n-add": "./package-bin.js"
+    "olsk-i18n-add": "./package-bin.js",
+    "_olsk-i18n-compile-file-path": "./package-bin.js"
   }
 }
