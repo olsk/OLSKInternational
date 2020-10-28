@@ -23,7 +23,7 @@ const mod = {
 	},
 
 	ControlPrintCompilationFilePath(args) {
-		console.log(require('./main.js')._OLSKInternationalCompilationFilePath(require('path').resolve(mod._ValueDirectory)));
+		console.log(require('./main.js')._OLSKInternationalCompilationFilePath(mod._ValueDirectory));
 	},
 
 	// SETUP
@@ -36,7 +36,7 @@ const mod = {
 
 	SetupValueDirectory () {
 		if (process.argv[2]) {
-			mod._ValueDirectory = process.argv[2];
+			mod._ValueDirectory = require('path').resolve(process.argv[2]);
 		}
 	},
 
