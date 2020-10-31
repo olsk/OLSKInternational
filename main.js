@@ -19,11 +19,11 @@
 				return false;
 			}
 
-			if (inputData.split('.').shift() !== exports.OLSKInternationalDefaultIdentifier()) {
+			if (inputData.split('.').shift() !== mod.OLSKInternationalDefaultIdentifier()) {
 				return false;
 			}
 
-			if (!exports._OLSKInternationalLanguageID(inputData)) {
+			if (!mod._OLSKInternationalLanguageID(inputData)) {
 				return false;
 			}
 
@@ -31,11 +31,11 @@
 		},
 
 		OLSKInternationalLanguageID (inputData) {
-			if (!exports.OLSKInternationalIsTranslationFileBasename(inputData)) {
+			if (!mod.OLSKInternationalIsTranslationFileBasename(inputData)) {
 				throw new Error('OLSKErrorInputNotValid');
 			}
 
-			return exports._OLSKInternationalLanguageID(inputData);
+			return mod._OLSKInternationalLanguageID(inputData);
 		},
 
 		OLSKInternationalSimplifiedLanguageCode (inputData) {
@@ -83,7 +83,7 @@
 			}
 
 			const _locales = Object.keys(dictionary).reverse().concat(...fallbackLocales.map(function (e) {
-					return [exports.OLSKInternationalSimplifiedLanguageCode(e), e]
+					return [mod.OLSKInternationalSimplifiedLanguageCode(e), e]
 				}).reverse())
 
 			return function (signature, requestLocales) {
@@ -92,7 +92,7 @@
 				}
 
 				let locales = _locales.concat(...requestLocales.map(function (e) {
-					return [exports.OLSKInternationalSimplifiedLanguageCode(e), e]
+					return [mod.OLSKInternationalSimplifiedLanguageCode(e), e]
 				}).reverse(), [])
 
 				let outputData;
