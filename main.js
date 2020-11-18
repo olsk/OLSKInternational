@@ -175,10 +175,18 @@
 			return _require('path').join(cwd, '__compiled', mod.OLSKInternationalDefaultIdentifier() + '-compilation.yml')
 		},
 
+		_SafeDump (inputData) {
+			const _require = require;
+
+			return _require('js-yaml').safeDump(inputData, {
+				lineWidth: Infinity,
+			});
+		},
+
 		OLSKInternationalWriteCompilationFile (cwd, languageID) {
 			const _require = require;
 
-			const data = _require('js-yaml').safeDump(this._OLSKInternationalCompilationObject(cwd, languageID));
+			const data = mod._SafeDump(this._OLSKInternationalCompilationObject(cwd, languageID));
 
 			const outputDirectory = _require('path').dirname(mod._OLSKInternationalCompilationFilePath(cwd));
 
@@ -199,7 +207,7 @@
 			const compilation = _require('js-yaml').safeLoad(_require('fs').readFileSync(mod._OLSKInternationalCompilationFilePath(cwd), 'utf8'));
 
 			Object.keys(compilation).map(function (e) {
-				return _require('fs').writeFileSync(e, _require('js-yaml').safeDump(compilation[e]));
+				return _require('fs').writeFileSync(e, mod._SafeDump(compilation[e]));
 			});
 		},
 
