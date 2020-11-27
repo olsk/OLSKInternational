@@ -282,6 +282,8 @@
 
 })));
 
-exports.OLSKLocalized = function (inputData) {
-	return exports.OLSKInternationalLocalizedString(inputData, JSON.parse(`{"OLSK_I18N_SEARCH_REPLACE":"OLSK_I18N_SEARCH_REPLACE"}`)[window.OLSKPublicConstants('OLSKSharedPageCurrentLanguage')]);
-};
+if (typeof exports === 'object') {
+	exports.OLSKLocalized = function (inputData) {
+		return exports.OLSKInternationalLocalizedString(inputData, JSON.parse(`{"OLSK_I18N_SEARCH_REPLACE":"OLSK_I18N_SEARCH_REPLACE"}`)[window.OLSKPublicConstants('OLSKSharedPageCurrentLanguage')]);
+	};
+}
