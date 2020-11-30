@@ -248,22 +248,22 @@
 						}));
 					}, []);
 				})(item.OLSKControllerRoutes()).filter(function (e) {
-					return e.OLSKRouteLanguages;
+					return e.OLSKRouteLanguageCodes;
 				}).filter(function (e) {
-					return !e.OLSKRouteLanguages.includes(languageID);
+					return !e.OLSKRouteLanguageCodes.includes(languageID);
 				}).length) {
 					return
 				};
 
-				const match = _require('fs').readFileSync(file, 'utf8').match(/OLSKRouteLanguages: \[.*\]/g);
+				const match = _require('fs').readFileSync(file, 'utf8').match(/OLSKRouteLanguageCodes: \[.*\]/g);
 
 				if (!match) {
-					throw new Error(`invalid OLSKRouteLanguages syntax in ${ e }`);
+					throw new Error(`invalid OLSKRouteLanguageCodes syntax in ${ e }`);
 				}
 
 				match.map(function (e) {
 					const match = e.match(/\[.*\]/);
-					return _require('fs').writeFileSync(file, _require('fs').readFileSync(file, 'utf8').replace(/OLSKRouteLanguages: \[.*\]/, `OLSKRouteLanguages: ['${JSON.parse(match[0].replace(/\'/g, '"')).concat(languageID).join('\', \'')}']`));
+					return _require('fs').writeFileSync(file, _require('fs').readFileSync(file, 'utf8').replace(/OLSKRouteLanguageCodes: \[.*\]/, `OLSKRouteLanguageCodes: ['${JSON.parse(match[0].replace(/\'/g, '"')).concat(languageID).join('\', \'')}']`));
 				});
 			});
 
