@@ -582,7 +582,7 @@ describe('OLSKInternationalSpreadCompilationFile', function test_OLSKInternation
 			return safeDump(compilation);
 		});
 		require('fs').writeFileSync = (function () {
-			item.push(...arguments);
+			item.push([...arguments]);
 		});
 
 		mod.OLSKInternationalSpreadCompilationFile(Math.random().toString());
