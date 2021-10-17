@@ -15,11 +15,15 @@
 				return false;
 			}
 
+			if (inputData.split('.').length < 2) {
+				return false;
+			}
+
 			if (!inputData.split('.').pop().match(/ya?ml/i)) {
 				return false;
 			}
 
-			if (inputData.split('.').shift() !== mod.OLSKInternationalDefaultIdentifier()) {
+			if (inputData.split('-').shift() !== mod.OLSKInternationalDefaultIdentifier()) {
 				return false;
 			}
 
@@ -47,12 +51,7 @@
 		},
 
 		_OLSKInternationalLanguageID (inputData) {
-			var elements = inputData.split('.');
-
-			elements.pop();
-			elements.shift();
-
-			return elements.pop();
+			return inputData.replace(mod.OLSKInternationalDefaultIdentifier() + '-', '').split('.').shift();
 		},
 
 		OLSKInternationalLocalizedString (translationKey, translationDictionary) {

@@ -24,7 +24,7 @@ describe('OLSKInternationalIsTranslationFileBasename', function test_OLSKInterna
 	});
 
 	it('returns false if without yaml extension', function() {
-		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('i18n.en.abc'), false);
+		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('i18n-en.abc'), false);
 	});
 
 	it('returns false if without OLSKInternationalDefaultIdentifier', function() {
@@ -32,12 +32,12 @@ describe('OLSKInternationalIsTranslationFileBasename', function test_OLSKInterna
 	});
 
 	it('returns false if without languageID', function() {
-		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('i18n.yaml'), false);
+		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('i18n-yaml'), false);
 	});
 
 	it('returns true if valid translationFileBasename', function() {
-		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('i18n.en.yaml'), true);
-		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('i18n.en.yml'), true);
+		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('i18n-en.yaml'), true);
+		deepEqual(mod.OLSKInternationalIsTranslationFileBasename('i18n-en.yml'), true);
 	});
 
 });
@@ -51,7 +51,7 @@ describe('OLSKInternationalLanguageID', function test_OLSKInternationalLanguageI
 	});
 
 	it('returns languageID', function() {
-		deepEqual(mod.OLSKInternationalLanguageID('i18n.en.yaml'), 'en');
+		deepEqual(mod.OLSKInternationalLanguageID('i18n-en.yaml'), 'en');
 	});
 
 });
@@ -218,7 +218,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 	});
 
 	it('returns globSync', function() {
-		const item = Date.now().toString() + '/i18n.en.yml';
+		const item = Date.now().toString() + '/i18n-en.yml';
 
 		require('glob').sync = (function () {
 			return [item];
@@ -231,14 +231,14 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 		require('glob').sync = (function () {
 			return [
 				Math.random().toString(),
-				'alfa/i18n.en.yml',
-				'__external/alfa/i18n.en.yml',
-				'node_modules/alfa/i18n.en.yml',
+				'alfa/i18n-en.yml',
+				'__external/alfa/i18n-en.yml',
+				'node_modules/alfa/i18n-en.yml',
 			];
 		});
 		deepEqual(mod._OLSKInternationalPaths(Math.random().toString(), /node_modules/), [
-			'alfa/i18n.en.yml',
-			'__external/alfa/i18n.en.yml',
+			'alfa/i18n-en.yml',
+			'__external/alfa/i18n-en.yml',
 			]);
 	});
 
@@ -264,9 +264,9 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 			return '{}';
 		});
 
-		mod._OLSKInternationalConstructedDictionary(['alfa/i18n.en.yml']);
+		mod._OLSKInternationalConstructedDictionary(['alfa/i18n-en.yml']);
 
-		deepEqual(item, ['alfa/i18n.en.yml', 'utf8']);
+		deepEqual(item, ['alfa/i18n-en.yml', 'utf8']);
 	});
 
 	it('constructs dictionary', function() {
@@ -276,7 +276,7 @@ describe('_OLSKInternationalConstructedDictionary', function test__OLSKInternati
 			return JSON.stringify({ alfa });
 		});
 
-		deepEqual(mod._OLSKInternationalConstructedDictionary(['alfa/i18n.en.yml']), {
+		deepEqual(mod._OLSKInternationalConstructedDictionary(['alfa/i18n-en.yml']), {
 			en: {
 				alfa,
 			},
@@ -406,7 +406,7 @@ describe('_OLSKInternationalCompilationObject', function test__OLSKInternational
 	});
 
 	it('filters if param3', function() {
-		const path = 'alfa/i18n.en.yml';
+		const path = 'alfa/i18n-en.yml';
 
 		deepEqual(__OLSKInternationalCompilationObject({
 			_OLSKInternationalPaths: (function () {
