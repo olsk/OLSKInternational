@@ -177,7 +177,7 @@
 		_SafeDump (inputData) {
 			const _require = require;
 
-			return _require('js-yaml').safeDump(inputData, {
+			return _require('js-yaml').dump(inputData, {
 				lineWidth: Infinity,
 			});
 		},

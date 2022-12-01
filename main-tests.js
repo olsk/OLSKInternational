@@ -7,7 +7,7 @@ const readFileSync = require('fs').readFileSync;
 const writeFileSync = require('fs').writeFileSync;
 const existsSync = require('fs').existsSync;
 const mkdirSync = require('fs').mkdirSync;
-const safeDump = require('js-yaml').safeDump; // #mysterious disappearing module
+const safeDump = require('js-yaml').dump; // #mysterious disappearing module
 
 describe('OLSKInternationalDefaultIdentifier', function test_OLSKInternationalDefaultIdentifier() {
 
