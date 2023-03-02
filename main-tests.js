@@ -2,7 +2,7 @@ const { throws, deepEqual } = require('assert');
 
 const mod = require('./main');
 
-const globSync = require('glob').sync;
+const globSync = require('glob').globSync;
 const readFileSync = require('fs').readFileSync;
 const writeFileSync = require('fs').writeFileSync;
 const existsSync = require('fs').existsSync;
@@ -203,7 +203,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 		const cwd = Math.random().toString();
 		const item = [];
 
-		require('glob').sync = (function () {
+		require('glob').globSync = (function () {
 			item.push(...arguments);
 
 			return [];
@@ -220,7 +220,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 	it('returns globSync', function() {
 		const item = Date.now().toString() + '/i18n-en.yml';
 
-		require('glob').sync = (function () {
+		require('glob').globSync = (function () {
 			return [item];
 		});
 
@@ -228,7 +228,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 	});
 
 	it('filters globSync if param2', function() {
-		require('glob').sync = (function () {
+		require('glob').globSync = (function () {
 			return [
 				Math.random().toString(),
 				'alfa/i18n-en.yml',
@@ -243,7 +243,7 @@ describe('_OLSKInternationalPaths', function test__OLSKInternationalPaths() {
 	});
 
 	afterEach(function () {
-		require('glob').sync = globSync;
+		require('glob').globSync = globSync;
 	});
 
 });
@@ -638,7 +638,7 @@ describe('OLSKInternationalAddControllerLanguageCode', function test_OLSKInterna
 		const cwd = Math.random().toString();
 		const item = [];
 
-		require('glob').sync = (function () {
+		require('glob').globSync = (function () {
 			item.push(...arguments);
 
 			return [];
@@ -656,7 +656,7 @@ describe('OLSKInternationalAddControllerLanguageCode', function test_OLSKInterna
 	it.skip('performs complex logic', function() {});
 
 	afterEach(function () {
-		require('glob').sync = globSync;
+		require('glob').globSync = globSync;
 		require('fs').readFileSync = readFileSync;
 		require('fs').writeFileSync = writeFileSync;
 	});

@@ -115,7 +115,7 @@
 
 			const _require = require;
 
-			return _require('glob').sync(`**/*${ mod.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
+			return _require('glob').globSync(`**/*${ mod.OLSKInternationalDefaultIdentifier() }*.y*(a)ml`, {
 				cwd,
 				realpath: true,
 			}).filter(function (e) {
@@ -221,7 +221,7 @@
 
 			const _require = require;
 
-			_require('glob').sync('controller.js', {
+			_require('glob').globSync('controller.js', {
 				cwd,
 				matchBase: true,
 				realpath: true,
